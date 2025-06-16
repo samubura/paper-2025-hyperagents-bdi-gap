@@ -1,0 +1,62 @@
+%%% Load any packages you require here.
+
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage[inline]{enumitem}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{code-listings}
+\usepackage{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Load other paper-specific packages
+\usepackage{myacronyms}
+\usepackage{mytodonotes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Define any theorem-like environments you require here.
+
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newtheorem{fact}[theorem]{Fact}
+% \newtheorem{definition}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Define any new commands you require here.
+
+\newcommand{\BibTeX}{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
+
+\newenvironment{inlinelist}[1][\roman]{\begin{enumerate*}[label=\emph{(#1*)}]}{\end{enumerate*}}
+
+\newcommand{\jakta}{JaKtA}
+\newcommand{\alchemist}{Alchemist}
+\newcommand{\agentspeak}{AgentSpeak(L)}
+\newcommand{\jason}{Jason}
+\newcommand{\jacamo}{JaCaMo}
+\newcommand{\disi}{Department of Computer Science and Engineering}
+\newcommand{\unibo}{Alma Mater Studiorum---Università di Bologna}
+
+\newcommand{\inlineAsl}[1]{\texttt{#1}}
+
+% FIX: https://tex.stackexchange.com/questions/735500/problem-with-amsmath-cleveref-acronym
+\makeatletter
+\AtBeginDocument
+ {
+   \def\ltx@label#1{\cref@label{#1}}%add braces
+   \def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
+\def\label@in@mmeasure@noarg#1{%
+    \begingroup%
+      \measuring@false%
+      \cref@old@label@in@display{#1}%remove braces for multline, see https://tex.stackexchange.com/q/737204/2388
+    \endgroup}%
+ } %
+\makeatother

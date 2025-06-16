@@ -17,3 +17,8 @@ _minted*/
 *.vrb
 build/
 out/
+*.fdb_latexmk
+*.fls
+*.xmpdata
+*.abs
+*.xmpi
