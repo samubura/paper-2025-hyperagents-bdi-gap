@@ -160,6 +160,30 @@ easing their adaptation to applications such as Grid Computing and Ubiquitous Co
 In line with the requirements in~\Cref{subsec:integration-requirements}, 
 authors highlight that changing the belief representation affects three operations of the whole AgentSpeak lifecycle, namely: the plan research, the query on the Belief Base, and the Belief Update.
 
+\paragraph{Integration of DL in BDI engines}
+The semantic extension AgentSpeak-DL proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, 
+is set to ground in JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
+%
+In this work, 
+authors provide an extension of \jason{} \ac{BDI} engine, 
+where core elements are customised to welcome \ac{DL} semantics.
+%
+The latter is represented as a ``semantically-enriched'' literal,
+represented inside the agent's belief base using FOL notation.
+%
+This choice allow to use \jason{}'s standard belief base selection mechanisms, 
+and adds on top of them a reasoning engine that query the ontology instance.
+%
+The choice to represent \ac{DL} in this way in the engine has the advantage that make use of fullfledged \jason{} engine features.
+%
+However, 
+this hindered the direct integration of the operational semantics described in~\cite{DBLP:conf/dalt/KlapiscakB08} 
+and required technological workarounds to integrate it.
+\mbnote{I know that ``workaround'' is not a good way to say this, I will improve the form}
+%
+
+
+
 \section{Levelling the Abstraction Gap with a Generalized BDI Engine}
 \sbnote{Preliminary description of the approach + possible showcase of WIP prootype?}
 
