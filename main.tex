@@ -109,13 +109,15 @@ email=danilo.pianini@unibo.it,
 %% information and builds the first part of the formatted document.
 \maketitle
 
+%==========================================================
 \section{Introduction}
+%==========================================================
 
 Integrating intelligent agents with the Web is a long-standing goal
 in both the \ac{MAS}~\cite{DBLP:conf/edoc/ShafiqDF06}
 and Semantic Web~\cite{lassila2001semantic} communities, but,
 despite such common interest, 
-the famous question ``Where are all the intelligent agents?'' remains unanswered~\cite{hendlerb2007expert}.
+the famous question ``Where are all the intelligent agents?'' remains unanswered to this day~\cite{hendlerb2007expert}.
 
 In the last decade, developments in the engineering of Web services including
 the more pervasive use of hypermedia and the \ac{REST} architectural style~\missingref[fielding]{},
@@ -154,28 +156,34 @@ Namely:
   \item \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\missingref{} which relies on pre-defined plans and hence provides limited support for the exploitation of new action possibilities discovered in an open hypermedia environment.\sbsidenote{Decidiamo se sto secondo punto lo esploriamo per completezza o se vogliamo cavarlo}\label{itm:gap-planning}
 \end{enumerate}
 
-In this paper, we reflect on these gaps and their technical implications on agent-oriented programming languages and frameworks. 
+In this paper, we reflect on these gaps and their technical implications on the overall development experience of creating \ac{BDI} agents that interact with Web resources and how this can be mitigated through the design of agent-oriented programming languages and frameworks. 
+
+We start by providing a brief overview of the \ac{BDI} model, the hypermedia nature of the (Semantic) Web and the fundamental principles of \ac{hMAS} in \Cref{sec:background}.
+%
+We then analyze the gap between \ac{BDI} agents and hypermedia in \Cref{sec:integrating-bdi-hypermedia}.
 %
 In doing so,
 we identify ideal integration requirements and let those guide our analysis of existing approaches that have attempted to bridge the gap between \ac{BDI} agents and hypermedia in the past to understand limitations and potential room for improvement.
 %
-Finally, we present a research direction
+Finally, in \Cref{sec:generalized-bdi-engine} we present our research direction
 aiming to tighten the integration of \ac{BDI} agents and hypermedia
 and reduce the abstraction gap for developers 
 by introducing a generalized \ac{BDI} engine
-that can directly leverage semantic Web technologies for belief representation and reasoning processes.
+that can directly leverage Semantic Web technologies for belief representation and reasoning processes.
 %
 We show preliminary results of a proof-of-concept implementation
 and discuss open challenges and opportunities of this approach.
 
-
+%==========================================================
 \section{Background}
+\label{sec:background}
+%==========================================================
 
 \subsection{BDI Agents}
 
 \sbnote{Add BDI agents background, e.g. BDI architecture, BDI logic, etc.}
 
-\subsection{The Web and Hypermedia}
+\subsection{The Web, Semantics and Hypermedia}
 
 \sbnote{Add Web and Hypermedia background, e.g. Web architecture, Hypermedia as the engine of application state (HATEOAS), Semantic Web and Ontological Reasoning etc.}
 
@@ -183,7 +191,10 @@ and discuss open challenges and opportunities of this approach.
 
 \sbnote{Very briefly introduce the research context of hMAS}
 
+%==========================================================
 \section{Integrating \acs{BDI} Agents and Hypermedia}
+\label{sec:integrating-bdi-hypermedia}
+%==========================================================
 
 \subsection{Gap Analysis}
 \sbnote{What is needed and why there is a gap}
@@ -235,15 +246,24 @@ and required technological workarounds to integrate it.
 %
 
 
-
+%==========================================================
 \section{Levelling the Abstraction Gap with a Generalized BDI Engine}
+\label{sec:generalized-bdi-engine}
+%==========================================================
+
 \sbnote{Preliminary description of the approach + possible showcase of WIP prootype?}
 
+%==========================================================
 \section{Discussion}
+\label{sec:discussion}
+%==========================================================
 
 \sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
 
+%==========================================================
 \section{Conclusion}
+\label{sec:conclusion}
+%==========================================================
 
 
 %%
