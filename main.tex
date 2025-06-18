@@ -181,7 +181,25 @@ and discuss open challenges and opportunities of this approach.
 
 \subsection{BDI Agents}
 
-\sbnote{Add BDI agents background, e.g. BDI architecture, BDI logic, etc.}
+\sbnote{Add BDI agents background, e.g. BDI architecture, BDI logic, etc. talk about agentspeak, jason, PRS}
+The \ac{BDI} model~\missingref[bdimodel]{}
+is a well-established cognitive architecture for the development of intelligent agents.
+%
+It is based on the idea of representing an agent's mental state in terms of three key components:
+\begin{inlinelist}
+  \item \emph{beliefs} represent what the agent thinks to be true about the world,
+  \item \emph{desires} represent the potential goals or objectives an agent may pursue,
+  \item \emph{intentions} represent the agent's commitments to achieve specific desires.
+\end{inlinelist}
+%
+Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\missingref[prs]{},
+which is based on the ability for agents to select \emph{plans} from a predefined set
+and execute them to achieve their intentions.
+
+Arguably, the most popular implementation of the \ac{BDI} model is \agentspeak{}~\missingref[agentspeak]{}:
+a logic-based agent programming language that provides a formal syntax and semantics for representing beliefs, desires, and intentions using logic predicates.
+\agentspeak{} agents leverage the syntactical expressiveness of logic programming to concisely and declaratively define beliefs and goals, and exploit logic unification to query the agent's \emph{belief base} and match plans to achieve their goals.
+This operational semantic has been reified in several concrete languages~\missingref{} the \jason{}~\missingref[jason]{} agent programming platform, which provides an \agentspeak{} interpreter and a Java-based runtime environment for implementing \ac{BDI} \ac{MAS}.
 
 \subsection{The Web, Semantics and Hypermedia}
 
@@ -197,14 +215,61 @@ and discuss open challenges and opportunities of this approach.
 %==========================================================
 
 \subsection{Gap Analysis}
-\sbnote{What is needed and why there is a gap}
+
+From the brief background presented in \Cref{sec:background}, 
+it should be evident that
+despite the both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation and reasoning,
+there are significant differences between the two worlds.
+
+Although \ac{FOL}, typically used in \ac{BDI} agents is theoretically expressive enough to represent the same knowledge as \ac{DL}~\missingref{} 
+-- as the latter is a subset of the former --
+when it comes to practical applications this creates an abstraction and technological gap
+which can be difficult to bridge for developers.
+
+\paragraph{Syntactical Differences}
+
+On a syntactical level, \ac{BDI} agents represent beliefs and goals using logic formulas which are either atomic \emph{terms} (e.g., \textsf{alice}) or a \emph{structure} composed of a \emph{functor} followed by an arbitrary number of \emph{arguments} within parentheses (e.g. \textsf{person(alice)}).
+%
+Differently, the Semantic Web relies on \ac{RDF} and \ac{OWL} to represent knowledge in the form of \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
+%
+Although triples can be mapped to logic formulas maintaining the same semantics, from a practical point of view, the degrees of freedom provided by \ac{FOL} in this mapping can lead to a variety of seemingly ``semantically equivalent'' syntactical representations (e.g., \textsf{type(alice, person)} and \textsf{triple(alice, type, person)} are reasonable mappings of the \ac{RDF} triple above).
+%
+Developers wishing to integrate \ac{BDI} agents with the Semantic Web hence face the challenges of choosing a suitable -- and more importantly consistent -- mapping which we believe adds a significant cognitive load during the development process.
+
+\paragraph{Semantics and Reasoning}
+Differently from \ac{FOL} where the semantics of a formula within the set of facts of the logic theory itself, 
+\ac{RDF} and \ac{OWL} provides a set of \emph{axioms} that define the meaning of the triples and how they can be inferred (e.g., \textsf{rdf:type} is a predicate that specify an \emph{instance of} relationship between the subject and a class).
+%
+When using \emph{ontologies} to represent standardized knowledge (e.g., \textsf{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above), 
+the semantics of the triples is further defined by the ontology itself,
+which can include additional axioms, constraints, and relationships between concepts.
+%
+This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
+developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies. 
+
+\sbnote{qua forse c'è da citare lavori che hanno fatto traduzioni automatiche di ontologie in FOL?? Sicuramente esistono}
+
+\paragraph{Querying and Inference}
+
+\sbnote{Unification vs SPARQL and Inference rules}
+
+\paragraph{Open vs. Closed World}
+
+\sbnote{Open vs. Closed world assumption, limitazione di PRS rispetto a mondo aperto}
+
 
 \subsection{Integration Requirements}
 \label{subsec:integration-requirements}
-\sbnote{Ideally, a general list of requirements which guide the analysis of existing approaches and the design of the proposed approach.}
-\sbnote{Since this is a short, we can also keep it short and consider a more in-depth analysis for the future...}
 
-
+Guided by the analysis of the gap between \ac{BDI} agents and semantic representation of hypermedia resources,
+we identify a set of requirements that we believe may level such gap for practical development of \ac{BDI} agents in Web environments.
+We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} should support the following features:
+\begin{itemize}
+  \item direct manipulation of \ac{RDF} and \ac{OWL} triples in the agent's belief base;
+  \item support for ontological reasoning and inference for reasoning and plan selection;
+  \item support for querying the belief base using \ac{SPARQL} instead of logic unification;
+  \item ...
+\end{itemize}
 
 \subsection{Existing Approaches}
 \sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
@@ -247,7 +312,7 @@ and required technological workarounds to integrate it.
 
 
 %==========================================================
-\section{Levelling the Abstraction Gap with a Generalized BDI Engine}
+\section{Levelling the Gap with a Generalized BDI Engine}
 \label{sec:generalized-bdi-engine}
 %==========================================================
 
@@ -286,7 +351,7 @@ and required technological workarounds to integrate it.
   
 %  \noindent{\em Or (by using the activity taxonomy in ceur-ws.org/genai-tax.html):\newline}
 %  During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar and spelling check. Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate images. After using these tool(s)/service(s), the author(s) reviewed and edited the content as needed and take(s) full responsibility for the publication’s content. 
-\sbnote{TODO}
+\sbnote{TODO check commented text above, sicuramente usato copilot per la scrittura}
 
 %%
 %% Define the bibliography file to be used
