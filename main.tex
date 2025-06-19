@@ -150,10 +150,10 @@ is hindered by a conceptual and technological gap,
 which limits developers in creating agents that can effectively reason and operate on semantic hypermedia resources.
 Namely:
 \begin{enumerate}[label={\roman*)}]
-  \item \ac{BDI} agents have typically been tied to logic programming with \ac{FOL} and unification -- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
-  whereas the Semantic Web is grounded on \ac{DL} and the mechanism of inference through the \ac{OWL} and \ac{RDF};
+  \item \ac{BDI} agents have typically been tied to logic programming and unification -- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
+  whereas the Semantic Web is grounded on \ac{DL} and concrete languages to express it such as the \ac{OWL} and \ac{RDF};
   \label{itm:gap-logic}
-  \item \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee} which relies on pre-defined plans and hence provides limited support for the exploitation of new action possibilities discovered in an open hypermedia environment.\sbsidenote{Decidiamo se sto secondo punto lo esploriamo per completezza o se vogliamo cavarlo}\label{itm:gap-planning}
+  \item \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee} which relies on pre-defined plans and hence provides limited support for the exploitation of new action possibilities discovered in an open hypermedia environment.
 \end{enumerate}
 
 In this paper, we reflect on these gaps and their technical implications on the overall development experience of creating \ac{BDI} agents that interact with Web resources and how this can be mitigated through the design of agent-oriented programming languages and frameworks. 
@@ -186,21 +186,31 @@ is a well-established cognitive architecture for the development of intelligent 
 %
 It is based on the idea of representing an agent's mental state in terms of three key components:
 \begin{inlinelist}
-  \item \emph{beliefs} represent what the agent thinks to be true about the world,
-  \item \emph{desires} represent the potential goals or objectives an agent may pursue,
-  \item \emph{intentions} represent the agent's commitments to achieve specific desires.
+  \item \emph{beliefs} are what the agent thinks to be true,
+  \item \emph{desires} are the potential goals or objectives an agent may pursue,
+  \item \emph{intentions} are the agent's commitments to achieve specific desires.
 \end{inlinelist}
-%
+
 Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\cite{georgeff1986pieee},
 which is based on the ability for agents to select \emph{plans} from a predefined set
-and execute them to achieve their intentions.
+and execute them to achieve their goals.
+%
+Generally speaking,
+\ac{BDI} agents follow a continuous cycle of
+\emph{perception} of external stimuli, 
+\emph{deliberation} to update beliefs, goals and intentions selecting plans to achieve goals,
+and \emph{action} advancing one intention by executing a step of the associated plan.
 
-To declaratively define the agent's behaviour, the agent-oriented programming community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
+To declaratively define the agent's behavior the agent-oriented programming community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
 %
 Arguably, the most popular language is \agentspeak{}~\cite{DBLP:conf/maamaw/Rao96} which 
 uses a logic-based formal syntax and semantics for representing beliefs, goals and actions using logic predicates.
 This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
 The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
+
+The logic-based nature of \agentspeak{} has characterized the development of \ac{BDI} agents due to its expressiveness and flexibility in supporting the basic mechanisms of the \ac{BDI} reasoning cycle.
+%
+Despite variations of \ac{BDI} programming languages and frameworks have been implemented without such a strong reliance on logic-based mechanisms (e.g., \cite{map2005sp,kampik2019emas}), in the following when we refer to \ac{BDI} agents we will implicitly refer to \agentspeak{}-like agents.
 
 \subsection{The Web, Semantics and Hypermedia}
 
@@ -211,7 +221,7 @@ The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{b
 \sbnote{Very briefly introduce the research context of hMAS}
 
 %==========================================================
-\section{Integrating \acs{BDI} Agents and Hypermedia}
+\section{Integrating \acs{BDI} Agents and Semantic Hypermedia}
 \label{sec:integrating-bdi-hypermedia}
 %==========================================================
 
@@ -219,26 +229,26 @@ The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{b
 
 From the brief background presented in \Cref{sec:background}, 
 it should be evident that
-despite the both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation and reasoning,
+despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation and reasoning,
 there are significant differences between the two worlds.
-
-Although \ac{FOL}, typically used in \ac{BDI} agents is theoretically expressive enough to represent the same knowledge as \ac{DL}~\missingref{} 
--- as the latter is a subset of the former --
-when it comes to practical applications this creates an abstraction and technological gap
+Specifically, Prolog-like logic typically used to practically implement \ac{BDI} agents and \ac{DL} used in the Semantic Web are different subsets of \ac{FOL} with consequently different expressiveness and semantics.
+%
+When it comes to practical applications this creates an abstraction and technological gap
 which can be difficult to bridge for developers.
 
 \paragraph{Syntactical Differences}
 
-On a syntactical level, \ac{BDI} agents represent beliefs and goals using logic formulas which are either atomic \emph{terms} (e.g., \textsf{alice}) or a \emph{structure} composed of a \emph{functor} followed by an arbitrary number of \emph{arguments} within parentheses (e.g. \textsf{person(alice)}).
+On a syntactical level, \ac{BDI} agents represent beliefs and goals using logic formulas
+%which are either atomic \emph{terms} (e.g., \textsf{alice}) or a \emph{structure} composed of a \emph{functor} followed by an arbitrary number of \emph{arguments} within parentheses
+(e.g. \textsf{person(alice)}).
 %
-Differently, the Semantic Web relies on \ac{RDF} and \ac{OWL} to represent knowledge in the form of \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
+Differently, in the Semantic Web knowledge is represented in the form of \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
 %
-Although triples can be mapped to logic formulas maintaining the same semantics, from a practical point of view, the degrees of freedom provided by \ac{FOL} in this mapping can lead to a variety of seemingly ``semantically equivalent'' syntactical representations (e.g., \textsf{type(alice, person)} and \textsf{triple(alice, type, person)} are reasonable mappings of the \ac{RDF} triple above).
+Although \ac{RDF} triples can be mapped to logic formulas, from a practical point of view, the degrees of freedom of this mapping can lead to a variety of seemingly ``semantically equivalent'' representations (e.g., \textsf{type(alice, person)} and \textsf{triple(alice, type, person)} are reasonable mappings of the \ac{RDF} triple above).
 %
 Developers wishing to integrate \ac{BDI} agents with the Semantic Web hence face the challenges of choosing a suitable -- and more importantly consistent -- mapping which we believe adds a significant cognitive load during the development process.
 
 \paragraph{Semantics and Reasoning}
-Differently from \ac{FOL} where the semantics of a formula within the set of facts of the logic theory itself, 
 \ac{RDF} and \ac{OWL} provides a set of \emph{axioms} that define the meaning of the triples and how they can be inferred (e.g., \textsf{rdf:type} is a predicate that specify an \emph{instance of} relationship between the subject and a class).
 %
 When using \emph{ontologies} to represent standardized knowledge (e.g., \textsf{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above), 
@@ -247,12 +257,27 @@ which can include additional axioms, constraints, and relationships between conc
 %
 This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
 developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies. 
-
-\sbnote{qua forse c'è da citare lavori che hanno fatto traduzioni automatiche di ontologie in FOL?? Sicuramente esistono}
+Although translating \ac{OWL} ontologies into logic formulas can be done through an automatic process~\cite{samuel2008tplp}
+it can still be cumbersome for \ac{BDI} developers to adapt to the different semantics and reasoning mechanisms when writing the agent program
+and similarly hard for Semantic Web experts to understand how to properly interact with the transformed knowledge base.
 
 \paragraph{Querying and Inference}
 
-\sbnote{Unification vs SPARQL and Inference rules}
+The logic representation used in \ac{BDI} agents supports querying the belief base using logic unification.
+%
+This basic mechanism allows to easily verify conditions based on the current beliefs, retrieve information and also perform inference using dedicated rules developers can encode to represent the problem domain.
+%
+Unification relies on finding a substitution for the variables in a logic formula that makes it true with the facts within a logic theory. When multiple substitutions are possible, the unification process usually returns the first available one, as it is typically implemented as a depth-first search algorithm with backtracking.
+%
+In contrast, the Semantic Web relies on \acs{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
+\acs{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples.
+%
+For inference, the Semantic Web relies on the semantics triples and ontologies which can be interpreted by reasoners capable of finding inconsistencies or deriving implicit knowledge. 
+%
+The inference capabilities are limited to the expressiveness of \ac{OWL}, the \ac{SWRL} can be used to extend it and define Prolog-like inference rules.
+%
+An important difference is that while logic unification automatically performs inference, \ac{SPARQL} typically searches simply on the set of triples in a knolwedge base. If inference is needed, the developer must explicitly \emph{materialize} the triples inferred by a reasoner before querying.
+
 
 \paragraph{Open vs. Closed World}
 
