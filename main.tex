@@ -50,26 +50,26 @@
 %% The "author" command and its associated commands are used to define
 %% the authors and their affiliations.
 \author[1]{Samuele Burattini}[%
-orcid=11111-2222-3333-4444,
+orcid=0009-0009-4853-7783,
 email=samuele.burattini@unibo.it,
 ]
 \cormark[1]
 \fnmark[1]
 
 \author[1]{Martina Baiardi}[%
-orcid=11111-2222-3333-4444,
+orcid=0009-0001-0799-9166,
 email=m.baiardi@unibo.it,
 ]
 \fnmark[1]
 
 \author[1]{Giovanni Ciatto}[%
-orcid=11111-2222-3333-4444,
+orcid=0000-0002-1841-8996,
 email=giovanni.ciatto@unibo.it,
 ]
 
 
 \author[1]{Danilo Pianini}[%
-orcid=11111-2222-3333-4444,
+orcid=0000-0002-8392-5409,
 email=danilo.pianini@unibo.it,
 ]
 
@@ -120,13 +120,13 @@ despite such common interest,
 the famous question ``Where are all the intelligent agents?'' remains unanswered to this day~\cite{hendlerb2007expert}.
 
 In the last decade, developments in the engineering of Web services including
-the more pervasive use of hypermedia and the \ac{REST} architectural style~\missingref[fielding]{},
+the more pervasive use of hypermedia and the \ac{REST} architectural style~\cite{DBLP:conf/icse/FieldingT00},
 and the growing adoption of Web interoperability standards even outside the traditional Web domain
--- such as the \ac{WoT}~\missingref[wotarch]{} --
+-- such as the \ac{WoT}~\cite{wotarch} --
 has renewed the interest in the integration of \ac{MAS} and the Web.
 %
 In this context, 
-the proposal of \ac{hMAS}~\missingref[ciortea]{} suggested a new perspective
+the proposal of \ac{hMAS}~\cite{DBLP:conf/atal/CiorteaMGBRZ19} suggested a new perspective
 envisioning the Web itself as an open environment
 which agents can roam by consuming and manipulating hypermedia resources.
 %
@@ -150,10 +150,10 @@ is hindered by a conceptual and technological gap,
 which limits developers in creating agents that can effectively reason and operate on semantic hypermedia resources.
 Namely:
 \begin{enumerate}[label={\roman*)}]
-  \item \ac{BDI} agents have typically been tied to logic programming with \ac{FOL} and unification -- e.g., with the popular \agentspeak{} semantic~\missingref[agentspeak]{} --
+  \item \ac{BDI} agents have typically been tied to logic programming with \ac{FOL} and unification -- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
   whereas the Semantic Web is grounded on \ac{DL} and the mechanism of inference through the \ac{OWL} and \ac{RDF};
   \label{itm:gap-logic}
-  \item \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\missingref{} which relies on pre-defined plans and hence provides limited support for the exploitation of new action possibilities discovered in an open hypermedia environment.\sbsidenote{Decidiamo se sto secondo punto lo esploriamo per completezza o se vogliamo cavarlo}\label{itm:gap-planning}
+  \item \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee} which relies on pre-defined plans and hence provides limited support for the exploitation of new action possibilities discovered in an open hypermedia environment.\sbsidenote{Decidiamo se sto secondo punto lo esploriamo per completezza o se vogliamo cavarlo}\label{itm:gap-planning}
 \end{enumerate}
 
 In this paper, we reflect on these gaps and their technical implications on the overall development experience of creating \ac{BDI} agents that interact with Web resources and how this can be mitigated through the design of agent-oriented programming languages and frameworks. 
@@ -181,8 +181,7 @@ and discuss open challenges and opportunities of this approach.
 
 \subsection{BDI Agents}
 
-\sbnote{Add BDI agents background, e.g. BDI architecture, BDI logic, etc. talk about agentspeak, jason, PRS}
-The \ac{BDI} model~\missingref[bdimodel]{}
+The \ac{BDI} model~\cite{DBLP:conf/atal/GeorgeffPPTW98}
 is a well-established cognitive architecture for the development of intelligent agents.
 %
 It is based on the idea of representing an agent's mental state in terms of three key components:
@@ -192,14 +191,16 @@ It is based on the idea of representing an agent's mental state in terms of thre
   \item \emph{intentions} represent the agent's commitments to achieve specific desires.
 \end{inlinelist}
 %
-Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\missingref[prs]{},
+Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\cite{georgeff1986pieee},
 which is based on the ability for agents to select \emph{plans} from a predefined set
 and execute them to achieve their intentions.
 
-Arguably, the most popular implementation of the \ac{BDI} model is \agentspeak{}~\missingref[agentspeak]{}:
-a logic-based agent programming language that provides a formal syntax and semantics for representing beliefs, desires, and intentions using logic predicates.
-\agentspeak{} agents leverage the syntactical expressiveness of logic programming to concisely and declaratively define beliefs and goals, and exploit logic unification to query the agent's \emph{belief base} and match plans to achieve their goals.
-This operational semantic has been reified in several concrete languages~\missingref{} the \jason{}~\missingref[jason]{} agent programming platform, which provides an \agentspeak{} interpreter and a Java-based runtime environment for implementing \ac{BDI} \ac{MAS}.
+To declaratively define the agent's behaviour, the agent-oriented programming community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
+%
+Arguably, the most popular language is \agentspeak{}~\cite{DBLP:conf/maamaw/Rao96} which 
+uses a logic-based formal syntax and semantics for representing beliefs, goals and actions using logic predicates.
+This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
+The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
 
 \subsection{The Web, Semantics and Hypermedia}
 
