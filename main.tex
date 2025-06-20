@@ -120,7 +120,7 @@ despite such common interest,
 the famous question ``Where are all the intelligent agents?'' remains unanswered to this day~\cite{hendlerb2007expert}.
 
 In the last decade, developments in the engineering of Web services including
-the more pervasive use of hypermedia and the \ac{REST} architectural style~\cite{DBLP:conf/icse/FieldingT00},
+the more pervasive use of hypermedia and the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02},
 and the growing adoption of Web interoperability standards even outside the traditional Web domain
 -- such as the \ac{WoT}~\cite{wotarch} --
 has renewed the interest in the integration of \ac{MAS} and the Web.
@@ -139,7 +139,7 @@ have taken by storm the development of intelligent agents that interact with the
 %
 Despite these approaches showing promising results,
 they do not yet replace the controllability of traditional agent-programming paradigms~\missingref{},
-nor they make obsolete the need for structured knowledge representation and reasoning provided by Semantic Web technologies such as the \ac{RDF} and \ac{OWL}~\cite{pan2024tkde}.
+nor they make obsolete the need for structured knowledge representation and reasoning~\cite{pan2024tkde} provided by Semantic Web technologies such as the \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}.
 %
 Agents developed with cognitive architectures such as the \ac{BDI} model
 capable of leveraging structured knowledge within the Semantic Web 
@@ -217,7 +217,40 @@ Despite variations of \ac{BDI} programming languages and frameworks have been im
 
 \subsection{The Web, Semantics and Hypermedia}
 
-\sbnote{Add Web and Hypermedia background, e.g. Web architecture, Hypermedia as the engine of application state (HATEOAS), Semantic Web and Ontological Reasoning etc. talk about affordances and affordance discovery, etc.}
+The World Wide Web was proposed by Tim Berners-Lee as a global, open information space
+based on the ability to link resources through hypermedia documents~\cite{DBLP:journals/cn/Berners-LeeCG92}.
+%
+The core principles of the Web architecture are collected as the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02}
+which allows to have independently evolving components
+that can interact through a uniform interface thanks to:
+\begin{inlinelist}
+  \item \acp{URI} to identify resources,
+  \item the exchange of representations of resources using shared data formats (e.g., JSON, XML),
+  \item self-descriptive messages following the semantics of the HTTP protocol, and
+  \item the use of \ac{HATEOAS} idea of guiding clients in their next possible actions through hypermedia.
+\end{inlinelist}
+
+The Semantic Web~\cite{BernersLee2001} complements the \emph{self-descriptive} nature of Web resources
+by encoding semantics in the representation through the general model of \ac{RDF}~\cite{RDF_Concepts_W3C:14}
+based on machine-readable \emph{triples}
+that state facts using a common vocabulary encoded within ontologies, themselves encoded in {OWL}~\cite{OWL_Syntax_W3C:12}.
+%
+Ontologies can be used to encode structured knowledge about a domain of interest, creating consensus on the meaning of concepts and relationships between them, hence improving interoperability between different systems on the open Web.
+
+In the context of the \ac{REST} architectural style, \emph{hypermedia} resource representations are defined as ``the simultaneous presentation of information and controls such that the information becomes the affordance through which the user obtains choices and selects actions''~\cite{DBLP:journals/toit/FieldingT02}.
+%
+Affordances
+-- i.e., action possibilities --
+are hence central to the inner workings of the Web,
+allowing clients to discover new resources and actions by consuming hypermedia.
+This mechanism drives the state transitions of the distributed client-server system
+ensuring scalability and independence of individual components.
+
+When hypermedia is annotated with explicit semantics it should be possible for clients to better understand the meaning of the affordances, avoiding the need for hard-coded knowledge.
+%
+This is the mechanism adopted for instance in the \ac{WoT}~\cite{wotarch} where \emph{\ac{TD}} are used as semantic hypermedia representations of \ac{IoT} devices,
+declaring the possible interaction affordances exposed by the devices (e.g., reading a sensor value, turning on a light, etc.).
+
 
 \subsection{Hypermedia Multi-Agent Systems}
 
