@@ -91,7 +91,7 @@ email=danilo.pianini@unibo.it,
   remain poorly integrated with the hypermedia nature of open Web environments
   which typically rely on Semantic Web technologies such as RDF and OWL.
   This paper examines the gap between these paradigms and surveys existing integration efforts on a conceptual and technical level.
-  Our proposal for a deeper integration relies on a generalized BDI engine to enable the development of BDI agents that can directly reason and operate on hypermedia resources.
+  Our proposal for a deeper integration relies on a generalized BDI engine to enable the development of BDI agents that can directly reason and operate on semantic hypermedia resources.
   We reflect on the potential benefits and challenges of this approach and show preliminary results of a proof-of-concept implementation.
 \end{abstract}
 
@@ -139,7 +139,7 @@ have taken by storm the development of intelligent agents that interact with the
 %
 Despite these approaches showing promising results,
 they do not yet replace the controllability of traditional agent-programming paradigms~\missingref{},
-nor they make obsolete the need for structured knowledge representation and reasoning provided by Semantic Web technologies~\cite{pan2024tkde}.
+nor they make obsolete the need for structured knowledge representation and reasoning provided by Semantic Web technologies such as the \ac{RDF} and \ac{OWL}~\cite{pan2024tkde}.
 %
 Agents developed with cognitive architectures such as the \ac{BDI} model
 capable of leveraging structured knowledge within the Semantic Web 
@@ -150,8 +150,9 @@ is hindered by a conceptual and technological gap,
 which limits developers in creating agents that can effectively reason and operate on semantic hypermedia resources.
 Namely:
 \begin{enumerate}[label={(G\arabic*)}]
-  \item \ac{BDI} agents have typically been tied to logic programming and unification -- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
-  whereas the Semantic Web is grounded on \ac{DL} and concrete languages to express it such as the \ac{OWL} and \ac{RDF};
+  \item \ac{BDI} agents have typically been tied to logic programming
+  %-- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
+  whereas the Semantic Web is grounded on \ac{DL}. The different technological choices used to concretely implement them add cognitive load to developers working on the integration of the two worlds (e.g., converting \ac{OWL} and \ac{RDF} triples in Prolog-like formulas);
   \label{gap:logic}
   \item \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee} which relies on pre-defined plans and hence provides limited support for the exploitation of new action possibilities discovered in an open hypermedia environment.
   \label{gap:open-world}
@@ -229,9 +230,11 @@ Despite variations of \ac{BDI} programming languages and frameworks have been im
 
 From the brief background presented in \Cref{sec:background}, 
 it should be evident that
-despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation and reasoning,
+despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation,
 there are significant differences between the two worlds.
-Specifically, Prolog-like logic typically used to practically implement \ac{BDI} agents and \ac{DL} used in the Semantic Web are different subsets of \ac{FOL} with consequently different expressiveness and semantics \ref{gap:logic}.
+%Specifically, Prolog-like logic typically used to practically implement \ac{BDI} agents and \ac{DL} used in the Semantic Web are different subsets of \ac{FOL} with consequently different expressiveness and semantics
+Specifically, description logic excel in representing relationships between concepts, while \ac{BDI} agents use logic programming to store facts about the external environment as belief and declaratively express goals.
+The different technologies used in the two different paradigms makes them difficult to integrate \ref{gap:logic}.
 %
 Furthermore, \ac{BDI} agents are typically designed with a closed-world perspective whereas the Semantic Web is an open information space \ref{gap:open-world}.
 %
@@ -240,13 +243,13 @@ which can be difficult to bridge for developers.
 %
 In the following, we describe in more detail such differences.
 
-\paragraph{Knowledge Representation}
+\paragraph{Syntactical Differences}
 
 On a syntactical level, \ac{BDI} agents represent beliefs and goals using logic formulas
 %which are either atomic \emph{terms} (e.g., \textsf{alice}) or a \emph{structure} composed of a \emph{functor} followed by an arbitrary number of \emph{arguments} within parentheses
 (e.g. \textsf{person(alice)}).
 %
-Differently, in the Semantic Web knowledge is represented in the form of \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
+Differently, in the Semantic Web, knowledge is represented in the form of \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
 %
 Although \ac{RDF} triples can be mapped to logic formulas, from a practical point of view, the degrees of freedom of this mapping can lead to a variety of seemingly ``semantically equivalent'' representations (e.g., \textsf{type(alice, person)} and \textsf{triple(alice, type, person)} are reasonable mappings of the \ac{RDF} triple above).
 %
@@ -274,28 +277,33 @@ This basic mechanism allows to easily verify conditions based on the current bel
 Unification relies on finding a substitution for the variables in a logic formula that makes it true with the facts within a logic theory. When multiple substitutions are possible, the unification process usually returns the first available one, as it is typically implemented as a depth-first search algorithm with backtracking.
 %
 In contrast, the Semantic Web relies on \acs{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
-\acs{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples.
+\acs{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples, 
+providing an intuitive way to query the knowledge base.
 %
-The inference capabilities of the Semantic Web are limited to the expressiveness of \ac{OWL}. The \ac{SWRL} can be used to extend it and define Prolog-like inference rules.
+As for inference, given the expressiveness limitations of \ac{OWL}, the \ac{SWRL} can be used to extend it and define Prolog-like inference rules.
 %
-An important difference is that while logic unification automatically performs inference, \ac{SPARQL} searches only on the set of triples currently in a knowledge base. If inference is required, the developer must explicitly \emph{materialize} the triples inferred by a reasoner before querying.
+An important difference is that while logic unification automatically performs inference, \acs{SPARQL} searches only on the set of triples currently in a knowledge base. If inference is required, the developer must explicitly \emph{materialize} the triples inferred by a reasoner before querying.
 
 
-\paragraph{Open vs. Closed World}
-
-\ac{BDI} agents are typically designed with a closed-world assumption, meaning that they assume that the belief they have (although potentially wrong) are complete and that any information not explicitly represented in the belief base is false.
-%
-Differently, in the Semantic Web, due to the open nature of the Web, it is assumed that the knowledge base is incomplete and that new information can be discovered at any time in an open-world fashion.
-%
-This difference has an impact also on the way agents are programmed and how they interact with the environment.
-%
+\paragraph{Open vs. Close Environments}
 \ac{BDI} agents are equipped with a predefined set of plans, composed of sequences of actions that the agent knows how to execute.
 %
-The development process of \ac{BDI} agents hence is based on the fact that a developer anticipates the possible settings an agent may encounter and provides plans to handle them.
+Additionally, \ac{BDI} agents usually run in a closed environment,
+which is designed by the developer to provide perceptions to the agents and 
+support the execution of the actions used in the plans~\cite{weyns2007aamas}. 
 %
-This makes it difficult for agents to adapt to new situations,
-including discovering new action possibilities while exploring the environment,
-which is critical in an open hypermedia environment which can expose new affordances to agents as they navigate through it.
+The development process of \ac{BDI} agents is hence based on the fact that a developer anticipates 
+the relevant possible settings an agent may encounter and provides plans to handle them.
+%
+This makes it difficult for agents to adapt to unexpected settings or to flexibly incorporate new actions that become available while exploring the environment.
+%
+Relating this to the open hypermedia nature of the Web, makes the effective integration of \ac{BDI} agents challenging.
+%
+Following the \ac{HATEOAS} principle, agents may discover new affordances
+-- i.e., action possibilities --
+while navigating through the hypermedia environment.
+%
+The inability to exploit such new affordances may limit the agent in its ability to adapt to the environment and effectively interact with it.
 
 
 %==========================================================
