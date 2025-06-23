@@ -18,6 +18,7 @@
 %% Minted listings support 
 %% Need pygment <http://pygments.org/> <http://pypi.python.org/pypi/Pygments>
 \usepackage{listings}
+
 %% auto break lines
 \lstset{breaklines=true}
 
@@ -395,30 +396,62 @@ rather than only logic terms.
 The semantics of AgentSpeak-DL demonstrates that agent-oriented programming can be extended for the development of Semantic Web applications, 
 easing their adaptation to applications such as Grid Computing and Ubiquitous Computing.
 %
-In line with the requirements in~\Cref{subsec:integration-requirements}, 
+In line with the requirements, 
 authors highlight that changing the belief representation affects three operations of the whole AgentSpeak lifecycle, namely: the plan research, the query on the Belief Base, and the Belief Update.
+\mbnote{This last paragraph can be removed, on sec. 5 i repeat the same fact again.}
 
 \paragraph{Integration of DL in BDI engines}
-The semantic extension AgentSpeak-DL proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, 
-is set to ground in JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
+The semantic extension AgentSpeak-DL, proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
 %
-In this work, 
-authors provide an extension of \jason{} \ac{BDI} engine, 
-where core elements are customised to welcome \ac{DL} semantics.
+In this work, the authors present an extension of the \jason{} \ac{BDI} engine, where key components are adapted to incorporate \ac{DL} semantics.
 %
-The latter is represented as a ``semantically-enriched'' literal,
-represented inside the agent's belief base using FOL notation.
+The latter is introduced through "semantically-enriched" literals, represented within the agent's belief base using first-order logic (FOL) notation.
 %
-This choice allow to use \jason{}'s standard belief base selection mechanisms, 
-and adds on top of them a reasoning engine that query the ontology instance.
+The examples in \Cref{lst:jasdl-example} illustrate how \ac{RDF} triples are represented as predicates in the belief base of the agent.
 %
-The choice to represent \ac{DL} in this way in the engine has the advantage that make use of fullfledged \jason{} engine features.
+This design allows for the use of \jason{}'s standard belief base selection mechanisms, while layering a reasoning engine capable of querying ontology instances on top.
+%
+Representing \ac{DL} in this manner offers the advantage of leveraging the full capabilities of the existing \jason{} engine.
+%
+Nevertheless, this integration strategy complicated the direct application of the operational semantics described in~\cite{DBLP:conf/dalt/KlapiscakB08}, and necessitated additional technical adaptations to achieve compatibility.
 %
 However, 
 this hindered the direct integration of the operational semantics described in~\cite{DBLP:conf/dalt/KlapiscakB08} 
-and required technological workarounds to integrate it.
-\mbnote{I know that ``workaround'' is not a good way to say this, I will improve the form}
+and called for engineering efforts to bridge the gap in integration.
+
+\lstinputlisting[
+  language=Prolog, 
+  caption={On the left, \ac{RDF} triples expressed as predicates in JASDL, on the right their meaning inferres by a \ac{OWL} reasoner. The example is taken from \cite{DBLP:conf/dalt/KlapiscakB08}.},
+  label={lst:jasdl-example}
+]{listings/jasdl.txt}
+
+Similarly, 
+in \cite{DBLP:conf/www/CharpenayZLB22} authors propose Hypermedea: 
+an extension of the \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} programming framework
+for interacting with \ac{WoT} environments.
 %
+The main differences with respect to JASDL include:
+\begin{inlinelist}
+\item Hypermedea does not specialise the \ac{BDI} engine, 
+but rather exploits the \cartago{} artifact model to serve required capabilities, and
+\item the \ac{RDF} triple is transformed into a belief logic predicate differently, as shown in \Cref{lst:hypermedea-example}.
+\end{inlinelist} 
+%
+Four kind of artifacts are defined in this contribution: 
+\begin{inlinelist}
+  \item \textit{Linked Data Artifacts} to interact with \ac{RDF} triples,
+  \item \textit{Ontology Artifacts} which bridge the gap between \ac{RDF} models and predicate representaitons,
+  \item \textit{Thing Artifacts} which proxies the communication with Things in the environment (i.e. each Thing its own Thing Artifact to interact with it), and
+  \item \textit{Planner Artifacts} which synthetize plans given a \textit{domain description} and a \textit{Problem Description}, using PDDL definitions and FF-X planner. 
+\end{inlinelist}
+
+
+\lstinputlisting[
+  language=Prolog, 
+  caption={The example shows how \ac{RDF} triples are represented in Hypermedea agents belief base. The example is taken from Hypermedea API reference (https://archive.is/vxULu).},
+  label={lst:hypermedea-example}
+]{listings/hypermedea.txt}
+
 
 \sbnote{for R4 we can mention the work from Danai on Signifiers, \cite{MeneguzziS15} for basic notions of planning and \cite{schmid2024kgswc} which is not BDI but has some interesting ideas on affordances and planning in hypermedia}
 
