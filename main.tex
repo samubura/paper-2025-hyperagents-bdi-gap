@@ -259,7 +259,21 @@ When such hypermedia is annotated with explicit semantics it should be possible 
 
 \subsection{Hypermedia Multi-Agent Systems}
 
-\sbnote{Very briefly introduce the research context of hMAS}
+The idea of \ac{hMAS}~\cite{DBLP:conf/atal/CiorteaMGBRZ19} seeks a deeper integration of \ac{MAS} and the Web through the adoption of hypermedia and \ac{REST} principles.
+%
+The main idea behind such integration is to overcome the limitations of previous approaches to \ac{MAS} and Web integration, by considering the Web as an \emph{environment} for agents to operate in~\cite{ciortea2018emas}.
+%
+Following the idea of the environment as a first-class abstraction of \ac{MAS}~\cite{weyns2007aamas},
+\ac{hMAS} revisits the Agents and Artifacts meta-model~\cite{ricci2011aamas} as a way to modularize and program the environment.
+%
+In \ac{hMAS}, artifacts are represented as hypermedia resources, exposing affordances that agents can discover through the uniform interface of the Web.
+
+Most of the effort in the \ac{hMAS} community has been focused on shaping the environment dimension of the \ac{MAS}, as ideally heterogeneous agents should be able to operate in the same environment.
+%
+However, the agent dimension of \ac{hMAS} must also be investigated to improve how agents can effectively exploit the hypermedia environment (e.g., for action discovery at runtime~\cite{vachtsevanou2024atal}).
+%
+In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on \ac{BDI} agents and their support to integrate with semantic hypermedia.
+
 
 %==========================================================
 \section{Gap Analysis}
