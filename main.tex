@@ -407,20 +407,19 @@ and required technological workarounds to integrate it.
 %==========================================================
 
 In this section,
-we propose a new approach to bridge the identified gaps between \ac{BDI} agents and and semantic hypermedia resources,
+we propose a new approach to bridge the identified gaps between \ac{BDI} agents and semantic hypermedia resources,
 guided by the requirements identified in \Cref{sec:integrating-bdi-hypermedia}.
 %
-The main idea is to introduce a generalized \ac{BDI} engine that does incapsulate all the \agentspeak{} mechanisms,
-while the specific representation of the information is decoupled from the engine itself.
+The core idea is to introduce a generalized \ac{BDI} engine that encapsulates all the \agentspeak{} mechanisms, 
+while decoupling the representation of knowledge from the engine itself. 
 %
-In this way,
-representation of the knowledge and consequently the reasoning mechanisms 
-can be adapted to the specific needs of the application domain.
+This separation allows the reasoning mechanisms to be adapted according to the specific needs of the application domain.
 %
-Depending on the application domain,
-a sufficiently generalized \ac{BDI} engine can be used to support 
-\ac{RDF} and \ac{OWL} triples, JSON, YAML, or any other structured representation of knowledge as first-class citizens in the framework,
-thus achieving the first requirement \ref{req:first}.
+In this way, knowledge representation---and, consequently, reasoning---can flexibly support different formats depending on the domain. 
+%
+A sufficiently generalized \ac{BDI} engine can operate over \ac{RDF} and \ac{OWL} triples, JSON, YAML, or any other structured representation of knowledge, treating them as first-class citizens within the framework. 
+%
+This design fulfills the first requirement (\ref{req:first}).
 
 However,
 as identified also in \cite{DBLP:conf/dalt/MoreiraVBH05}, 
@@ -441,18 +440,41 @@ the three operations are typically implemented exploiting logic mechanisms such 
 But in other domains,
 the three operations must be adapted to the specific representation of the knowledge.
 %
-The incarnation of these three operations is on the hands of who implements the \ac{BDI} engine specialization,
+The incarnation of these three operations is in the hands of the person who implements the \ac{BDI} engine specialization,
 which specifies how the generic \ac{BDI} engine should operate on the specific representation of the knowledge,
 thus addressing \ref{req:second} and \ref{req:third}. 
 
 %
 The approach described addresses mainly the first gap \ref{gap:logic}, 
-and we believe it represents a first step towards addressing the second gap \ref{gap:open-world} as future work.
+and we believe it represents a first step towards addressing the second gap \ref{gap:open-world} as future work,
+particularly by enabling more expressive and open-ended reasoning capabilities through flexible knowledge integration.
 
+The integration of \ac{BDI} \ac{MAS} with heterogeneous knowledge representations 
+can be performed with a layered architecture of the framework.
+%
+The layered architecture proposed is composed of: 
+\begin{enumerate}
+  \item \textbf{Application layer}: responsible for defining the concrete goals, plans, and interactions of the agent tailored to a specific environment or task.
+  \item \textbf{Domain-Specific Specialization Layer}: defines how the abstract operations specified by the generalized \ac{BDI} model are grounded in a specific knowledge representation. This layer acts as a semantic adapter between the generalized engine and the data, enabling the architecture to support a wide variety of knowledge models without modifying the core reasoning logic.
+  \item \textbf{Generalized \ac{BDI} reasoning model}: encapsulates the general mechanisms of a \ac{BDI} framework, including the agent's deliberation process and reasoning cycle, while remaining agnostic to the syntax and semantics of the underlying belief representation.
+  %
+  Key responsibilities of this layer include:
+  \begin{inlinelist}
+    \item maintains the intention stack updated;
+    \item manages goals lifecycle;
+    \item defines the lifecycle of the agent (i.e. when to perceive, deliberate and act); and
+    \item defines the protocols for belief update, belief retrieval and plan selection.
+  \end{inlinelist}
+  
+\end{enumerate}
 
-\sbnote{Preliminary description of the approach + possible showcase of WIP prootype?}
+The main advantages of this isolation are: reuse of the same reasoning engine across multiple domains, and Better support for semantic web standards and open-world reasoning.
 
-\sbnote{explain that with this we focus on \ref{gap:logic} only and leave \ref{gap:open-world} for future work}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\linewidth]{figures/architecture.pdf}
+  \caption{tbd}
+\end{figure}
 
 %==========================================================
 \section{Discussion}
