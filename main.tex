@@ -162,11 +162,10 @@ In this paper, we reflect on these gaps and their technical implications on the 
 
 We start by providing a brief overview of the \ac{BDI} model, the hypermedia nature of the (Semantic) Web and the fundamental principles of \ac{hMAS} in \Cref{sec:background}.
 %
-We then analyze the gap between \ac{BDI} agents and hypermedia in \Cref{sec:gap-analysis}.
+We then analyze the gap between \ac{BDI} agents and hypermedia, and identify ideal integration requirements in \Cref{sec:gap-analysis}
 %
-Then,
-in \Cref{sec:integrating-bdi-hypermedia},
-we identify ideal integration requirements and let those guide our analysis of existing approaches that have attempted to bridge the gap between \ac{BDI} agents and hypermedia in the past to understand limitations and potential room for improvement.
+Then, in \Cref{sec:related-works},
+we let those requirements guide our analysis of related works which attempted to bridge the gap between \ac{BDI} agents and semantic hypermedia to understand limitations and potential room for improvement.
 %
 Finally, in \Cref{sec:generalized-bdi-engine} we present our research direction
 aiming to tighten the integration of \ac{BDI} agents and hypermedia
@@ -205,13 +204,13 @@ and execute them to achieve their goals.
 To declaratively define the agent's behavior the \ac{AOP} community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
 %
 Arguably, the most popular language is \agentspeak{}~\cite{DBLP:conf/maamaw/Rao96} which 
-uses a logic-based formal syntax and semantics for representing beliefs, goals and actions using logic predicates.
+uses a formal syntax and semantics derived from \ac{LP} for representing beliefs, goals and actions using logic predicates.
 %This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
 %The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
 
 % The logic-based nature of \agentspeak{} has characterized the development of \ac{BDI} agents due to its expressiveness and flexibility in supporting the basic mechanisms of the \ac{BDI} reasoning cycle.
 %
-Despite variations of \ac{BDI} programming languages and frameworks have been implemented without such a strong reliance on logic-based mechanisms (e.g., \cite{map2005sp,kampik2019emas}), in the following when we refer to \ac{BDI} agents we will implicitly refer to \agentspeak{}-like agents.
+Despite \ac{BDI} programming languages and frameworks have also been implemented without such a strong reliance on \ac{LP} mechanisms (e.g., \cite{map2005sp,kampik2019emas}), in the following when we refer to \ac{BDI} agents we will implicitly refer to \agentspeak{}-like agents.
 
 \subsection{The Web, Semantics and Hypermedia}
 
@@ -234,7 +233,9 @@ which supports independently evolving components through a set of principles.
 The Semantic Web~\cite{BernersLee2001} complements the \emph{self-descriptive} principle of \ac{REST} 
 by encoding semantics in the representation through the general model of \ac{RDF}~\cite{RDF_Concepts_W3C:14}
 based on machine-readable \emph{triples}
-that state facts using a common vocabulary defined within ontologies, encoded in {OWL}~\cite{OWL_Syntax_W3C:12}.
+that state facts using a common vocabulary defined within ontologies.
+%
+{OWL}~\cite{OWL_Syntax_W3C:12} allows the encoding of such ontologies following the principles of \ac{DL} to define concepts and relationships between them.
 %
 %Ontologies can be used to encode structured knowledge about a domain of interest, creating consensus on the meaning of concepts and relationships between them, hence improving interoperability between different systems on the open Web.
 
@@ -270,11 +271,13 @@ Most of the effort in the \ac{hMAS} community has been focused on shaping the en
 %
 However, the agent dimension of \ac{hMAS} must also be investigated to improve how agents can effectively exploit the hypermedia environment (e.g., for action discovery at runtime~\cite{vachtsevanou2024atal}).
 %
-In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on \ac{BDI} agents and their support to integrate with semantic hypermedia.
+In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on \ac{BDI} agents and how to support deeper integration with semantic hypermedia.
+
+
 
 
 %==========================================================
-\section{Gap Analysis}
+\section{Integrating \acs{BDI} Agents and Semantic Hypermedia: a Gap Analysis}
 \label{sec:gap-analysis}
 %==========================================================
 
@@ -283,7 +286,7 @@ it should be evident that
 despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation,
 there are significant differences between the two worlds.
 %Specifically, Prolog-like logic typically used to practically implement \ac{BDI} agents and \ac{DL} used in the Semantic Web are different subsets of \ac{FOL} with consequently different expressiveness and semantics
-Specifically, description logic excel in representing relationships between concepts, while \ac{BDI} agents use logic programming to store facts about the external environment as belief and declaratively express goals.
+Specifically, \ac{DL} excel in representing relationships between concepts, while \ac{BDI} agents use \ac{LP} to store facts about the external environment as belief and declaratively express goals.
 The different technologies used in the two different paradigms makes them difficult to integrate \ref{gap:logic}.
 %
 Furthermore, \ac{BDI} agents are typically designed with a closed-world perspective whereas the Semantic Web is an open information space \ref{gap:open-world}.
@@ -353,16 +356,12 @@ Following the \ac{HATEOAS} principle, agents may discover new affordances
 -- i.e., action possibilities --
 while navigating through the hypermedia environment.
 %
-The inability to exploit such new affordances may limit the agent in its ability to adapt to the environment and effectively interact with it.
+The inability to exploit such new affordances may limit the agent in adapting to the environment and effectively interact with it.
 
-
-%==========================================================
-\section{Integrating \acs{BDI} Agents and Semantic Hypermedia}
+\subsection{Integration Requirements}
 \label{sec:integrating-bdi-hypermedia}
-%==========================================================
 
-
-Guided by the analysis of the gap between \ac{BDI} agents and semantic representation of hypermedia resources,
+Guided by the gap analysis
 we identify a set of requirements that we believe may level such gap for practical development of \ac{BDI} agents in Web environments.
 We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} should support the following features:
 \begin{enumerate}[label={(R\arabic*)}]
@@ -375,9 +374,15 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
   \item ability to exploit affordances discovered in the environment to dynamically adapt the agent's plans.
   \label{req:fourth}
 \end{enumerate}
-\subsection{Existing Approaches}
-\label{subsec:existing-approaches}
-\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
+
+
+%==========================================================
+\section{Related Works}
+\label{sec:related-works}
+%==========================================================
+
+
+%\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
 
 \paragraph{Semantic extensions of AgentSpeak}
 In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose an AgentSpeak extension named AgentSpeak-DL, 
