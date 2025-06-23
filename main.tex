@@ -187,31 +187,31 @@ and discuss open challenges and opportunities of this approach.
 The \ac{BDI} model~\cite{DBLP:conf/atal/GeorgeffPPTW98}
 is a well-established cognitive architecture for the development of intelligent agents.
 %
-It is based on the idea of representing an agent's mental state in terms of three key components:
-\begin{inlinelist}
-  \item \emph{beliefs} are what the agent thinks to be true,
-  \item \emph{desires} are the potential goals or objectives an agent may pursue,
-  \item \emph{intentions} are the agent's commitments to achieve specific desires.
-\end{inlinelist}
-
-Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\cite{georgeff1986pieee},
-which is based on the ability for agents to select \emph{plans} from a predefined set
-and execute them to achieve their goals.
-%
-Generally speaking,
+% It is based on the idea of representing an agent's mental state in terms of three key components:
+% \begin{inlinelist}
+%   \item \emph{beliefs} are what the agent thinks to be true,
+%   \item \emph{desires} are the potential goals or objectives an agent may pursue,
+%   \item \emph{intentions} are the agent's commitments to achieve specific desires.
+% \end{inlinelist}
 \ac{BDI} agents follow a continuous cycle of
-\emph{perception} of external stimuli, 
-\emph{deliberation} to update beliefs, goals and intentions selecting plans to achieve goals,
-and \emph{action} advancing one intention by executing a step of the associated plan.
+\begin{inlinelist}
+  \item \emph{perception} of external stimuli and gather new \emph{beliefs},
+  \item \emph{deliberation} to update beliefs, goals and choose \emph{intentions} to pursue selecting \emph{plan} to achieve goals,
+  and
+  \item \emph{action} advancing one intention by executing a step of the associated plan.
+\end{inlinelist}
+Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\cite{georgeff1986pieee},
+which is based on the ability for agents to select plans from a predefined set
+and execute them to achieve their goals.
 
-To declaratively define the agent's behavior the agent-oriented programming community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
+To declaratively define the agent's behavior the \ac{AOP} community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
 %
 Arguably, the most popular language is \agentspeak{}~\cite{DBLP:conf/maamaw/Rao96} which 
 uses a logic-based formal syntax and semantics for representing beliefs, goals and actions using logic predicates.
-This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
-The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
+%This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
+%The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
 
-The logic-based nature of \agentspeak{} has characterized the development of \ac{BDI} agents due to its expressiveness and flexibility in supporting the basic mechanisms of the \ac{BDI} reasoning cycle.
+% The logic-based nature of \agentspeak{} has characterized the development of \ac{BDI} agents due to its expressiveness and flexibility in supporting the basic mechanisms of the \ac{BDI} reasoning cycle.
 %
 Despite variations of \ac{BDI} programming languages and frameworks have been implemented without such a strong reliance on logic-based mechanisms (e.g., \cite{map2005sp,kampik2019emas}), in the following when we refer to \ac{BDI} agents we will implicitly refer to \agentspeak{}-like agents.
 
@@ -220,36 +220,41 @@ Despite variations of \ac{BDI} programming languages and frameworks have been im
 The World Wide Web was proposed by Tim Berners-Lee as a global, open information space
 based on the ability to link resources through hypermedia documents~\cite{DBLP:journals/cn/Berners-LeeCG92}.
 %
-The core principles of the Web architecture are collected as the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02}
-which allows to have independently evolving components
-that can interact through a uniform interface thanks to:
-\begin{inlinelist}
-  \item \acp{URI} to identify resources,
-  \item the exchange of representations of resources using shared data formats (e.g., JSON, XML),
-  \item self-descriptive messages following the semantics of the HTTP protocol, and
-  \item the use of \ac{HATEOAS} idea of guiding clients in their next possible actions through hypermedia.
-\end{inlinelist}
+The Web is built with the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02}
+which supports independently evolving components through a set of principles.
+%
+% The \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02}
+% adopted by the Web allows to have independently evolving components
+% that can interact through a uniform interface thanks to:
+% \begin{inlinelist}
+%   \item \acp{URI} to identify resources,
+%   \item the exchange of representations of resources using shared data formats (e.g., JSON, XML),
+%   \item self-descriptive messages following the semantics of the HTTP protocol, and
+%   \item the use of \ac{HATEOAS} guiding clients in their next possible actions.
+% \end{inlinelist}
 
-The Semantic Web~\cite{BernersLee2001} complements the \emph{self-descriptive} nature of Web resources
+The Semantic Web~\cite{BernersLee2001} complements the \emph{self-descriptive} principle of \ac{REST} 
 by encoding semantics in the representation through the general model of \ac{RDF}~\cite{RDF_Concepts_W3C:14}
 based on machine-readable \emph{triples}
-that state facts using a common vocabulary encoded within ontologies, themselves encoded in {OWL}~\cite{OWL_Syntax_W3C:12}.
+that state facts using a common vocabulary defined within ontologies, encoded in {OWL}~\cite{OWL_Syntax_W3C:12}.
 %
-Ontologies can be used to encode structured knowledge about a domain of interest, creating consensus on the meaning of concepts and relationships between them, hence improving interoperability between different systems on the open Web.
+%Ontologies can be used to encode structured knowledge about a domain of interest, creating consensus on the meaning of concepts and relationships between them, hence improving interoperability between different systems on the open Web.
 
-In the context of the \ac{REST} architectural style, \emph{hypermedia} resource representations are defined as ``the simultaneous presentation of information and controls such that the information becomes the affordance through which the user obtains choices and selects actions''~\cite{DBLP:journals/toit/FieldingT02}.
-%
-Affordances
--- i.e., action possibilities --
-are hence central to the inner workings of the Web,
-allowing clients to discover new resources and actions by consuming hypermedia.
-This mechanism drives the state transitions of the distributed client-server system
-ensuring scalability and independence of individual components.
+Another fundamental principle is \ac{HATEOAS} which defines hypermedia as ``the simultaneous presentation of information and controls such that the information becomes the affordance through which the user obtains choices and selects actions''~\cite{DBLP:journals/toit/FieldingT02}.
+% %
+% Affordances
+% -- i.e., action possibilities --
+% are central to the inner workings of the Web,
+% allowing clients to discover new resources and actions by consuming hypermedia.
+% This mechanism drives the state transitions of the distributed client-server system
+% ensuring scalability and independence of individual components.
+In this way, the Web can be seen as an open environment
+where clients discover new resources and action possibilities by consuming hypermedia.
 
-When hypermedia is annotated with explicit semantics it should be possible for clients to better understand the meaning of the affordances, avoiding the need for hard-coded knowledge.
+When such hypermedia is annotated with explicit semantics it should be possible for clients to better understand the meaning of the affordances, avoiding the need for hard-coded knowledge.
 %
-This is the mechanism adopted for instance in the \ac{WoT}~\cite{wotarch} where \emph{\ac{TD}} are used as semantic hypermedia representations of \ac{IoT} devices,
-declaring the possible interaction affordances exposed by the devices (e.g., reading a sensor value, turning on a light, etc.).
+%This is the mechanism adopted for instance in the \ac{WoT}~\cite{wotarch} where \emph{\ac{TD}} are used as semantic hypermedia representations of \ac{IoT} devices,
+%declaring the possible interaction affordances exposed by the devices (e.g., reading a sensor value, turning on a light, etc.).
 
 
 \subsection{Hypermedia Multi-Agent Systems}
