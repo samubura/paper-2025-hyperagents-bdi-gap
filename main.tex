@@ -92,7 +92,7 @@ email=danilo.pianini@unibo.it,
   which typically rely on Semantic Web technologies such as RDF and OWL.
   This paper examines the gap between these paradigms and surveys existing integration efforts on a conceptual and technical level.
   Our proposal for a deeper integration relies on a generalized BDI engine to enable the development of BDI agents that can directly reason and operate on semantic hypermedia resources.
-  We reflect on the potential benefits and challenges of this approach and show preliminary results of a proof-of-concept implementation.
+  We reflect on the potential benefits and challenges of this approach, showing an abstract architecture that is guiding the re-design of our agent programming framework \jakta{}.
 \end{abstract}
 
 %%
@@ -170,11 +170,9 @@ we identify ideal integration requirements and let those guide our analysis of e
 %
 Finally, in \Cref{sec:generalized-bdi-engine} we present our research direction
 aiming to tighten the integration of \ac{BDI} agents and hypermedia
-and reduce the abstraction gap for developers 
+reducing the abstraction gap for developers 
 by introducing a generalized \ac{BDI} engine
-that can directly leverage Semantic Web technologies for belief representation and reasoning processes.
-%
-We show preliminary results of a proof-of-concept implementation
+that can directly leverage Semantic Web technologies for belief representation and reasoning processes
 and discuss open challenges and opportunities of this approach.
 
 %==========================================================
@@ -494,10 +492,6 @@ The main advantages of this isolation are: reuse of the same reasoning engine ac
   \caption{tbd}
 \end{figure}
 
-%==========================================================
-\section{Discussion}
-\label{sec:discussion}
-%==========================================================
 
 \sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
 
