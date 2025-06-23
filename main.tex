@@ -358,7 +358,6 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
   \item ability to exploit affordances discovered in the environment to dynamically adapt the agent's plans.
   \label{req:fourth}
 \end{enumerate}
-
 \subsection{Existing Approaches}
 \label{subsec:existing-approaches}
 \sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
@@ -402,7 +401,7 @@ and required technological workarounds to integrate it.
 \sbnote{for R4 we can mention the work from Danai on Signifiers, \cite{MeneguzziS15} for basic notions of planning and \cite{schmid2024kgswc} which is not BDI but has some interesting ideas on affordances and planning in hypermedia}
 
 %==========================================================
-\section{Levelling the Gap with a Generalized BDI Engine}
+\section{Levelling the Gap with a Generalised BDI Engine}
 \label{sec:generalized-bdi-engine}
 %==========================================================
 
@@ -410,14 +409,18 @@ In this section,
 we propose a new approach to bridge the identified gaps between \ac{BDI} agents and semantic hypermedia resources,
 guided by the requirements identified in \Cref{sec:integrating-bdi-hypermedia}.
 %
-The core idea is to introduce a generalized \ac{BDI} engine that encapsulates all the \agentspeak{} mechanisms, 
-while decoupling the representation of knowledge from the engine itself. 
+The approach addresses mainly the first gap \ref{gap:logic}, 
+and we believe it represents a first step towards addressing the second gap \ref{gap:open-world} as future work,
+particularly by enabling more expressive \ac{BDI} frameworks.
+%
+The core idea is to introduce a generalised \ac{BDI} engine that encapsulates agents reasoning cycle, 
+while decoupling the representation of beliefs from the framework itself. 
 %
 This separation allows the reasoning mechanisms to be adapted according to the specific needs of the application domain.
 %
-In this way, knowledge representation---and, consequently, reasoning---can flexibly support different formats depending on the domain. 
+In this way, beliefs---and, consequently, reasoning---can flexibly support different formats depending on the domain. 
 %
-A sufficiently generalized \ac{BDI} engine can operate over \ac{RDF} and \ac{OWL} triples, JSON, YAML, or any other structured representation of knowledge, treating them as first-class citizens within the framework. 
+A sufficiently generalised \ac{BDI} engine can operate over \ac{RDF} and \ac{OWL} triples, JSON, YAML, or any other structured representation of knowledge, treating them as first-class citizens within the framework. 
 %
 This design fulfills the first requirement (\ref{req:first}).
 
@@ -429,33 +432,28 @@ Specifically,
 there are three main operations concerned:
 \begin{itemize} 
   \item \emph{plan selection} is the process of selecting a plan to achieve a goal among the ones available, 
-  which applicability is strictly related on how knowledge is represented in the belief base;
+  which evaluation of applicability is strictly related on how beliefs are represented in the belief base;
   \item \emph{belief querying} is the process of retrieving information from the belief base;
   \item \emph{belief update} is the process of updating the belief base with new information.
 \end{itemize}
 %
-In \ac{LP}-based frameworks where knowledge is represented as Prolog ground terms, 
+In \ac{LP}-based frameworks where beliefs are represented as Prolog ground terms, 
 the three operations are typically implemented exploiting logic mechanisms such as unification and inference.
 %
 But in other domains,
-the three operations must be adapted to the specific representation of the knowledge.
+the three operations must be adapted to the specific representation of the beliefs.
 %
-The incarnation of these three operations is in the hands of the person who implements the \ac{BDI} engine specialization,
-which specifies how the generic \ac{BDI} engine should operate on the specific representation of the knowledge,
+The incarnation of these three operations is in the hands of the person who implementsa responsibility of the developer of the \ac{BDI} engine specialization,
+which specifies how the generic \ac{BDI} engine should operate on the specific representation of the beliefs,
 thus addressing \ref{req:second} and \ref{req:third}. 
 
-%
-The approach described addresses mainly the first gap \ref{gap:logic}, 
-and we believe it represents a first step towards addressing the second gap \ref{gap:open-world} as future work,
-particularly by enabling more expressive and open-ended reasoning capabilities through flexible knowledge integration.
 
-The integration of \ac{BDI} \ac{MAS} with heterogeneous knowledge representations 
+
+The integration of \ac{BDI} \ac{MAS} with heterogeneous syntax representations 
 can be performed with a layered architecture of the framework.
 %
 The layered architecture proposed is composed of: 
 \begin{enumerate}
-  \item \textbf{Application layer}: responsible for defining the concrete goals, plans, and interactions of the agent tailored to a specific environment or task.
-  \item \textbf{Domain-Specific Specialization Layer}: defines how the abstract operations specified by the generalized \ac{BDI} model are grounded in a specific knowledge representation. This layer acts as a semantic adapter between the generalized engine and the data, enabling the architecture to support a wide variety of knowledge models without modifying the core reasoning logic.
   \item \textbf{Generalized \ac{BDI} reasoning model}: encapsulates the general mechanisms of a \ac{BDI} framework, including the agent's deliberation process and reasoning cycle, while remaining agnostic to the syntax and semantics of the underlying belief representation.
   %
   Key responsibilities of this layer include:
@@ -465,7 +463,8 @@ The layered architecture proposed is composed of:
     \item defines the lifecycle of the agent (i.e. when to perceive, deliberate and act); and
     \item defines the protocols for belief update, belief retrieval and plan selection.
   \end{inlinelist}
-  
+  \item \textbf{Concrete Specification Layer}: defines how the abstract operations specified by the generalised \ac{BDI} model are grounded in a specific belief representation. This layer acts as a semantic adapter between the generalised engine and the data, enabling the architecture to support a wide variety of syntax representations without modifying the core reasoning logic.
+  \item \textbf{Application layer}: responsible for defining the concrete goals, plans, and interactions of the agent tailored to a specific environment or task.
 \end{enumerate}
 
 The main advantages of this isolation are: reuse of the same reasoning engine across multiple domains, and Better support for semantic web standards and open-world reasoning.
