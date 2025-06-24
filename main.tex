@@ -312,63 +312,102 @@ However, the agent dimension of \ac{hMAS} must also be investigated to improve h
 %
 In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on \ac{BDI} agents and how to support deeper integration with semantic hypermedia.
 
-
-
-
 %==========================================================
 \section{Integrating \acs{BDI} Agents and Semantic Hypermedia: a Gap Analysis}
 \label{sec:gap-analysis}
 %==========================================================
 
-From the brief background presented in \Cref{sec:background}, 
-it should be evident that
-despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation,
-there are significant differences between the two worlds.
-%Specifically, Prolog-like logic typically used to practically implement \ac{BDI} agents and \ac{DL} used in the Semantic Web are different subsets of \ac{FOL} with consequently different expressiveness and semantics
-Specifically, \ac{DL} excel in representing relationships between concepts, while \ac{BDI} agents use \ac{LP} to store facts about the external environment as belief and declaratively express goals.
-The different technologies used in the two different paradigms makes them difficult to integrate \ref{gap:logic}.
-%
-Furthermore, \ac{BDI} agents are typically designed with a closed-world perspective whereas the Semantic Web is an open information space \ref{gap:open-world}.
-%
-When it comes to practical applications this creates an abstraction and technological gap
-which can be difficult to bridge for developers.
-%
-In the following, we describe in more detail such differences.
+% From the brief background presented in \Cref{sec:background}, 
+% it should be evident that
+% despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation,
+% there are significant differences between the two worlds.
+% %Specifically, Prolog-like logic typically used to practically implement \ac{BDI} agents and \ac{DL} used in the Semantic Web are different subsets of \ac{FOL} with consequently different expressiveness and semantics
+% Specifically, \ac{DL} excel in representing relationships between concepts, while \ac{BDI} agents use \ac{LP} to store facts about the external environment as belief and declaratively express goals.
+% The different technologies used in the two different paradigms makes them difficult to integrate \ref{gap:logic}.
+% %
+% Furthermore, \ac{BDI} agents are typically designed with a closed-world perspective whereas the Semantic Web is an open information space \ref{gap:open-world}.
+% %
+% When it comes to practical applications this creates an abstraction and technological gap
+% which can be difficult to bridge for developers.
+% %
+% In the following, we describe in more detail such differences.
 
-\paragraph{Syntactical Differences}
+Here we delve into the details of the gaps that we identified between \ac{BDI} agents and semantic hypermedia,
+namely,
+\ref{gap:logic} the practical differences for knowledge representation and manipulation 
+between \ac{LP} and Semantic Web technologies,
+and 
+\ref{gap:open-world} the limitations of \ac{BDI} agents with \emph{open} hypermedia environments,
+where actions are not predefined but discovered at runtime.
 
-On a syntactical level, \ac{BDI} agents represent beliefs and goals using logic formulas
+\paragraph{Syntactical Differences Between \acs{LP} and \acs{RDF}.}
+
+On a syntactical level, 
+\ac{BDI} agents commonly represent beliefs as definite clauses\missingref{} %,
+% and goals as facts
 %which are either atomic \emph{terms} (e.g., \textsf{alice}) or a \emph{structure} composed of a \emph{functor} followed by an arbitrary number of \emph{arguments} within parentheses
 (e.g. \textsf{person(alice)}).
 %
-Differently, in the Semantic Web, knowledge is represented in the form of \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
+In the Semantic Web, 
+knowledge is represented in the form of \ac{RDF} \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \textsf{:alice rdf:type foaf:Person}).
 %
-Although \ac{RDF} triples can be mapped to logic formulas, from a practical point of view, the degrees of freedom of this mapping can lead to a variety of seemingly ``semantically equivalent'' representations (e.g., \textsf{type(alice, person)} and \textsf{triple(alice, type, person)} are reasonable mappings of the \ac{RDF} triple above).
+Although \ac{RDF} triples can be represented as definite clauses 
+(while the opposite is not true), 
+in practice,
+semantic knowledge is available on the Web in \ac{RDF},
+and accessing that from \ac{BDI} agents requires a translation step,
+which has many degrees of freedom
+(e.g., \textsf{type(alice, person)} and \textsf{triple(alice, type, person)} are reasonable mappings of the \ac{RDF} triple above),
+and it is up to \ac{BDI} developers.
 %
-Developers wishing to integrate \ac{BDI} agents with the Semantic Web hence face the challenges of choosing a suitable -- and more importantly consistent -- mapping which we believe adds a significant cognitive load during the development process.
+% Developers wishing to integrate \ac{BDI} agents with the Semantic Web hence face the challenges of choosing a suitable -- and more importantly consistent -- mapping which we believe adds a significant cognitive load during the development process.
+In other words,
+implementing the translation is additional work.
 
-\paragraph{Semantics and Reasoning}
-\ac{RDF} and \ac{OWL} provides a set of \emph{axioms} that define the meaning of the triples and how they can be inferred (e.g., \textsf{rdf:type} is a predicate that specify an \emph{instance of} relationship between the subject and a class).
-%
-When using \emph{ontologies} to represent standardized knowledge (e.g., \textsf{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above), 
-the semantics of the triples is further defined by the ontology itself,
-which can include additional axioms, constraints, and relationships between concepts.
-%
-This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
-developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies. 
-Although \ac{OWL} ontologies can be converted into logic formulas through an automatic process~\cite{samuel2008tplp}
-it can be cumbersome for \ac{BDI} developers to exploit them when writing the agent program
-and similarly hard for Semantic Web experts to understand how to properly interact with the translated knowledge base.
+\paragraph{Ontological Reasoning}
 
-\paragraph{Querying and Inference}
+\ac{RDF} triplets are commonly paired with \ac{OWL} ontologies,
+providing \emph{axioms} that define the meaning of the triples's predicates 
+(e.g., \textsf{rdf:type} denotes the \emph{instance of} relation between subjects and classes),
+as well as constraints, and relationships between concepts.
+%
+This is a way to standardize knowledge representation in the hypermedia 
+(e.g., \textsf{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above).
+%
+Logic programs, instead, are not really meant to be scattered over the Web,
+nor being accessed remotely.
 
-The logic representation used in \ac{BDI} agents supports querying the belief base using logic unification.
+Again,
+there is a hidden trap for \ac{BDI} developers willing to create agents that can perform ontological reasoning:
+% This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
+% developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies. 
+either they translate the \ac{OWL} ontology into definite clauses,
+or they wrap some \ac{OWL} reasoner into the agent interpreter and reasoning cycle.
 %
-This basic mechanism allows to easily verify conditions based on the current beliefs, retrieve information and also perform inference using dedicated rules developers can encode to represent the problem domain.
+Despite being automatable to some extent (cf. ~\cite{samuel2008tplp}),
+both activities require additional engineering effort,
+and should rather be addressed once and for all by \ac{BDI} frameworks engineers.
+
+% Although \ac{OWL} ontologies can be converted into logic formulas through an automatic process
+% it can be cumbersome for \ac{BDI} developers to exploit them when writing the agent program
+% and similarly hard for Semantic Web experts to understand how to properly interact with the translated knowledge base.
+
+\paragraph{Querying and Inference.}
+
+\ac{BDI} commonly rely on \ac{SLD} resolution\missingref{} to query the belief base,
+when this is implemented as a logic program.
 %
-Unification relies on finding a substitution for the variables in a logic formula that makes it true with the facts within a logic theory. When multiple substitutions are possible, the unification process usually returns the first available one, as it is typically implemented as a depth-first search algorithm with backtracking.
+Furthermore,
+they rely on logic unification\missingref{} to match plans and goals,
+making the intertwining with \ac{LP} even deeper.
 %
-In contrast, the Semantic Web relies on \acs{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
+% This basic mechanism allows to easily verify conditions based on the current beliefs, retrieve information and also perform inference using dedicated rules developers can encode to represent the problem domain.
+% %
+% Unification relies on finding a substitution for the variables in a logic formula that makes it true with the facts within a logic theory. When multiple substitutions are possible, the unification process usually returns the first available one, as it is typically implemented as a depth-first search algorithm with backtracking.
+%
+\gcsidenote{riprendi da qui}
+Conversely, 
+the Semantic Web relies on \acs{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
 \acs{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples, 
 providing an intuitive way to query the knowledge base.
 %
