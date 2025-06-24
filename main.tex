@@ -149,7 +149,7 @@ However,
 despite being promising,
 these approaches sacrifice the controllability of traditional agent-programming paradigms~\missingref{},
 to sell the (hollow?) promise of circumventing the need for structured knowledge representation and reasoning~\cite{pan2024tkde}%
----commonly at the price relaxed guarantees in terms of correctness, and completeness.
+---commonly at the price of relaxed guarantees in terms of correctness, and completeness.
 % provided by Semantic Web technologies such as the \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}.
 
 Arguably,
@@ -289,7 +289,7 @@ Another fundamental principle is \ac{HATEOAS} which defines hypermedia as ``the 
 % ensuring scalability and independence of individual components.
 In this way, the Web can be seen as an open environment
 where clients discover new resources and action possibilities by consuming hypermedia.
-
+%
 When such hypermedia is annotated with explicit semantics it should be possible for clients to better understand the meaning of the affordances, avoiding the need for hard-coded knowledge.
 %
 %This is the mechanism adopted for instance in the \ac{WoT}~\cite{wotarch} where \emph{\ac{TD}} are used as semantic hypermedia representations of \ac{IoT} devices,
@@ -363,17 +363,16 @@ and it is up to \ac{BDI} developers.
 %
 % Developers wishing to integrate \ac{BDI} agents with the Semantic Web hence face the challenges of choosing a suitable -- and more importantly consistent -- mapping which we believe adds a significant cognitive load during the development process.
 In other words,
-implementing the translation is additional work.
+implementing the translation is additional work which, if handled manually in an ad-hoc manner can be source of inconsistencies.
 
 \paragraph{Ontological Reasoning}
 
-\ac{RDF} triplets are commonly paired with \ac{OWL} ontologies,
+\ac{RDF} triplets are commonly paired with \ac{OWL} ontologies (e.g., \texttt{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above),
 providing \emph{axioms} that define the meaning of the triples's predicates 
 (e.g., \texttt{rdf:type} denotes the \emph{instance of} relation between subjects and classes),
 as well as constraints, and relationships between concepts.
 %
-This is a way to standardize knowledge representation in the hypermedia 
-(e.g., \texttt{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above).
+This is a way to standardize knowledge representation across hypermedia.
 %
 Logic programs, instead, are not really meant to be scattered over the Web,
 nor being accessed remotely.
@@ -387,7 +386,7 @@ or they wrap some \ac{OWL} reasoner into the agent interpreter and reasoning cyc
 %
 Despite being automatable to some extent (cf. ~\cite{samuel2008tplp}),
 both activities require additional engineering effort,
-and should rather be addressed once and for all by \ac{BDI} frameworks engineers.
+and should rather be addressed with direct support from the \ac{BDI} framework.
 
 % Although \ac{OWL} ontologies can be converted into logic formulas through an automatic process
 % it can be cumbersome for \ac{BDI} developers to exploit them when writing the agent program
@@ -416,10 +415,10 @@ Despite both \acs{LP} and \acs{SPARQL} allow expressing declarative queries for 
 the latter may be more practical and efficient for \ac{RDF} data,
 especially when the query spans over multiple triples.
 %
-Consider for instance a query selecting the unknown relation between \texttt{alice} and \texttt{bob} 
-(say, \texttt{?R}),
+Consider for instance a query selecting the unknown relation \texttt{?R} between \texttt{alice} and \texttt{bob},
 and all the triplets where the subject is \texttt{carl},
 the predicate is \texttt{?R} and the object is \texttt{?x}.
+\sbsidenote{Qua secondo me gio ti sei perso dei pezzi o non ho capito l'esempio, il messaggio ok, ma l'esempio no}
 %
 A query on this kind would be straightforward to write in \acs{SPARQL},
 while requiring second-order variables in \ac{LP}%
