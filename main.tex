@@ -464,13 +464,13 @@ we identify a set of requirements that we believe may improve practical developm
 We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} should support the following features:
 \begin{enumerate*}[label={(R\arabic*)}]
   \item direct manipulation of \ac{RDF} and \ac{OWL} triples in the agent's belief base;
-  \label{req:first}
+  \label{req:direct}
   \item ontological reasoning and inference for plan selection;
-  \label{req:second}
+  \label{req:reasoning}
   \item support for querying the belief base using \acs{SPARQL} instead of logic unification;
-  \label{req:third}
+  \label{req:query}
   \item ability to exploit affordances discovered in the environment to dynamically adapt the agent's plans.
-  \label{req:fourth}
+  \label{req:actions}
 \end{enumerate*}
 
 
@@ -557,8 +557,13 @@ Four kind of artifacts are defined in this contribution:
   label={lst:hypermedea-example}
 ]{listings/hypermedea.txt}
 
-
-\sbnote{for R4 we can mention the work from Danai on Signifiers, \cite{MeneguzziS15} for basic notions of planning and \cite{schmid2024kgswc} which is not BDI but has some interesting ideas on affordances and planning in hypermedia}
+\paragraph{Exploiting New Actions at Runtime}
+To exploit new actions \ref{req:actions} \ac{BDI} agents can be extended with a \emph{planner} that can generate new plans at runtime~\cite{MeneguzziS15}. 
+In the context of \ac{hMAS}, this requires that affordances in the environment are represented to convey information to the agent about how and when to use them and that agents can interpret such information to compose their plans.
+%
+Recent works have explored using \emph{signifiers}~\cite{vachtsevanou2023atal} in hypermedia environments to better convey affordances to agents, and integrated their interpretation within \ac{BDI} agents~\cite{vachtsevanou2024atal}.
+%
+A less structured approach is proposed in \cite{10.1145/3603163.3609077} and \cite{schmid2024kgswc} where agents (albeit not \ac{BDI}) are able to select actions in a hypermedia environment by using a \ac{LLM} as an oracle.
 
 %==========================================================
 \section{Levelling the Gap with a Generalised BDI Engine}
