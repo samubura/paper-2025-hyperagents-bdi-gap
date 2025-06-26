@@ -141,7 +141,7 @@ agents can interact by consuming and manipulating hypermedia resources.
 
 Even more recently, 
 with the advent of \ac{LLM}-based \emph{Agentic AI}~\cite{acharya2025access} 
-the creation of \ac{LLM}-driven agents that interact with Web APIs~\missingref{}
+the creation of \ac{LLM}-driven agents that interact with Web APIs~\cite{10.5555/3692070.3692540}
 -- or directly with Websites~\cite{10.5555/3692070.3694608} --
 has gained significant attention.
 %
@@ -149,7 +149,7 @@ However,
 despite being promising,
 these approaches
 do not make structured knowledge representation obsolete~\cite{pan2024tkde}, 
-and often sacrifice the controllability of traditional agent-programming paradigms~\missingref{}
+and often sacrifice the controllability of traditional agent-programming paradigms
 %to sell the (hollow?) promise of circumventing the need for structured knowledge representation and reasoning~\cite{pan2024tkde}%
 at the price of relaxed guarantees in terms of correctness, and completeness.
 % provided by Semantic Web technologies such as the \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}.
@@ -190,30 +190,30 @@ More precisely:
 In this paper, 
 we reflect on these gaps,
 their technical implications, % on the overall development experience of creating \ac{BDI} agents that interact with Web resources 
-and
-how they can be mitigated by abstracting the design of agent-oriented programming languages and frameworks. 
-%
-We start by providing a brief overview of the \ac{BDI} model, 
-the hypermedia nature of the (Semantic) Web,
-and 
-the fundamental principles of \ac{hMAS} in \Cref{sec:background}.
-%
-We then analyze the gap between \ac{BDI} agents and hypermedia, 
-and identify ideal integration requirements in \Cref{sec:gap-analysis}
-%
-Then, 
-in \Cref{sec:related-works},
-we test those requirements against prior contributions 
-which already attempted to bridge the gap between \ac{BDI} agents and semantic hypermedia.
-%
-Finally, 
-in \Cref{sec:generalized-bdi-engine},
-we present our research direction
-aimed at %tightening the integration of \ac{BDI} agents and hypermedia
-reducing the abstraction gap for developers
-by introducing a generalized \ac{BDI} engine
-that can directly leverage Semantic Web technologies for belief representation and deliberation;
-and we discuss open challenges and opportunities of our approach.
+explore how this gap is currently being addressed in the \ac{hMAS} community and
+propose how to mitigate it by abstracting the design of agent-oriented programming languages and frameworks.
+% %
+% We start by providing a brief overview of the \ac{BDI} model, 
+% the hypermedia nature of the (Semantic) Web,
+% and 
+% the fundamental principles of \ac{hMAS} in \Cref{sec:background}.
+% %
+% We then analyze the gap between \ac{BDI} agents and hypermedia, 
+% and identify ideal integration requirements in \Cref{sec:gap-analysis}
+% %
+% Then, 
+% in \Cref{sec:related-works},
+% we test those requirements against prior contributions 
+% which already attempted to bridge the gap between \ac{BDI} agents and semantic hypermedia.
+% %
+% Finally, 
+% in \Cref{sec:generalized-bdi-engine},
+% We present our research direction
+% aimed at %tightening the integration of \ac{BDI} agents and hypermedia
+% reducing the abstraction gap for developers
+% by introducing a generalized \ac{BDI} engine
+% that can directly leverage Semantic Web technologies for belief representation and deliberation;
+% and we discuss open challenges and opportunities of our approach.
 
 %==========================================================
 \section{Background}
@@ -221,7 +221,6 @@ and we discuss open challenges and opportunities of our approach.
 %==========================================================
 
 \subsection{BDI Agents}
-\gcsidenote{Se serve racimolare spazio, io questa la toglierei}
 
 The \ac{BDI} model~\cite{DBLP:conf/atal/GeorgeffPPTW98}
 is a well-established cognitive architecture for the development of intelligent agents.
@@ -484,6 +483,8 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 \label{sec:related-works}
 %==========================================================
 
+\sbnote{ho tolto i paragrafi ma non ho integrato, passo la palla a gio prima di conflicts}
+
 
 %\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
 
@@ -495,7 +496,7 @@ no \ac{BDI} agent programming framework has been designed to explicitly use \ac{
 nor to support querying the belief base using \acs{SPARQL} \ref{req:query}.
 %
 
-\paragraph{Semantic extensions of AgentSpeak.}
+%\paragraph{Semantic extensions of AgentSpeak.}
 
 In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose an AgentSpeak extension named AgentSpeak-DL, 
 to support ontological reasoning (thus, addressing \ref{req:reasoning}).
@@ -531,7 +532,7 @@ where the agents lifecycle is enriched with goal states,
 where beliefs are logic predicates adapted to represent \ac{DL} objects and relationships,
 like in AgentSpeak-DL.
 
-\paragraph{Integration of DL in BDI engines}
+%\paragraph{Integration of DL in BDI engines}
 The semantic extension AgentSpeak-DL, proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
 %
 In this work, the authors present an extension of the \jason{} \ac{BDI} engine, where key components are adapted to incorporate \ac{DL} semantics.
@@ -549,6 +550,7 @@ but it limits the ergonomy of the agent programming,
 as developers have to translate \ac{RDF} triples into logic predicates adhering to JASDL belief specification.
 %
 \lstinputlisting[
+  lastline=3,
   language=Prolog, 
   caption={On the left, \ac{RDF} triples expressed as predicates in JASDL, on the right their meaning inferres by a \ac{OWL} reasoner. The example is taken from \cite{DBLP:conf/dalt/KlapiscakB08}.},
   label={lst:jasdl-example}
@@ -583,6 +585,7 @@ Four kinds of artifact are defined in Hypermedea:
 \end{inlinelist}
 %
 \lstinputlisting[
+  lastline=1,
   language=Prolog, 
   caption={The example shows how \ac{RDF} triples are represented in Hypermedea agents belief base. The example is taken from Hypermedea API reference (https://archive.is/vxULu).},
   label={lst:hypermedea-example}
@@ -619,7 +622,7 @@ addressing the requirements in \Cref{sec:integrating-bdi-hypermedia}.
 This approach primarily tackles gap~\ref{gap:logic}, while leaving the exploration of gap~\ref{gap:open-world} -- benefitting from the modularity of the engine -- to future works.
 
 The core idea is to create a \ac{BDI} interpreter encapsulating agents reasoning cycle, 
-while decoupling the languages for knowledge representation and manipulation. 
+while decoupling the specific technology used for knowledge representation and manipulation. 
 %
 This would allow for tailoring the reasoning mechanisms to application-specific needs.
 %
@@ -630,7 +633,7 @@ can flexibly support different formats depending on the domain at hand.
 %
 In this way, 
 agents can easily be adapted to work with different data formats,
-ranging from \ac{RDF} and \ac{OWL} triples, to JSON, YAML, and other Web standards. 
+ranging from \ac{RDF} triples, to JSON, YAML, and other Web standards. 
 %
 Such a design fulfills the first requirement \ref{req:direct}.
 
@@ -666,10 +669,10 @@ Consider for instance these fundamental operations:
 In \ac{LP}-based framework,
 these would simply rely on logic unification and resolution,
 whereas in a generalized \ac{BDI} engine,
-each operation may rely on its own language.
+each operation may rely on different matching strategies.
 %
 For instance,
-for a Semantic Hypermedia, 
+for Semantic Hypermedia agent, 
 one may rely on \ac{RDF} and \ac{OWL} for beliefs representation,
 \acs{SPARQL} for belief querying and update,
 and \ac{SWRL} for plan selection and reasoning%
@@ -705,8 +708,7 @@ Firstly,
   where the aforementioned \acs{API} are implemented to provide concrete operations on the belief base.
   %
   This layer acts as an adapter between the generalized \ac{BDI} reasoner
-  and the specific knowledge representation languages of choice,
-  and their supporting technologies.
+  and the specific knowledge representation technologies of choice.
   %
   Lastly,
   \item the \textbf{application layer}: 
@@ -716,12 +718,9 @@ Firstly,
 
 % The main advantages of this isolation are: reuse of the same reasoning engine across multiple domains, and Better support for semantic web standards and open-world reasoning.
 
-Finally,
-in this framework,
-requirement \ref{req:actions} would be addressable upon need,
-by agent developers directly,
-who would select the best knowledge representation and manipulation languages 
-to facilitate their applicative agents to discover new actions at runtime in the hypermedia environment.
+Requirement \ref{req:actions} although not directly addressed by the approach, 
+could be integrated with the techniques already being explored in the \ac{hMAS} community (cf. \Cref{sec:related-works}), benefitting from the possibility of choosing the most suitable knowledge representation technology 
+to facilitate their agents to discover new actions at runtime in the hypermedia environment.
 
 %==========================================================
 \section{Conclusion}
