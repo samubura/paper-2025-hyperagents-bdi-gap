@@ -93,7 +93,7 @@ email=danilo.pianini@unibo.it,
   which typically rely on Semantic Web technologies such as RDF and OWL.
   This paper examines the gap between these paradigms and surveys existing integration efforts on a conceptual and technical level.
   Our proposal for a deeper integration relies on a generalized BDI engine to enable the development of BDI agents that can directly reason and operate on semantic hypermedia resources.
-  We reflect on the potential benefits and challenges of this approach, showing an abstract architecture that is guiding the re-design of our agent programming framework \jakta{}.
+  We reflect on the potential benefits and challenges of this approach, showing an abstract architecture that can be tailored to support different types of beliefs and reasoning mechanisms.
 \end{abstract}
 
 %%
@@ -489,7 +489,7 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 %\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
 
 Here we summarize some related works demonstrating how,
-despite the many extensions of AgentSpeak towards \ac{DL},
+despite the many extensions of \agentspeak{} towards \ac{DL},
 the direct exploitation of Semantic Web technologies
 -- namely, \ref{req:direct} --
 in \ac{BDI} \emph{programming} frameworks is still underexplored.
@@ -545,13 +545,14 @@ in such a way that state transitions are tied to conditions expressed in \ac{DL}
 \gcsidenote{Riprendi da qui}
 
 %\paragraph{Integration of DL in BDI engines}
-The semantic extension AgentSpeak-DL, proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
+%The semantic extension AgentSpeak-DL, proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
+JASDL~\cite{DBLP:conf/dalt/KlapiscakB08} implements the semantics of AgentSpeak-DL extending the \jason{}~\cite{bordini2007programming} \ac{BDI} engine.
 %
-In this work, the authors present an extension of the \jason{} \ac{BDI} engine, where key components are adapted to incorporate \ac{DL} semantics.
+% In this work, the authors present an extension of the \jason{} \ac{BDI} engine, where key components are adapted to incorporate \ac{DL} semantics.
 %
-The latter is introduced through "semantically-enriched" literals, represented within the agent's belief base using first-order logic (FOL) notation.
+Syntactically, ``semantically-enriched'' literals, are represented within the agent's belief base using logic predicates (see \Cref{lst:jasdl-example}).
 %
-The examples in \Cref{lst:jasdl-example} illustrate how \ac{RDF} triples are represented as \ac{DL} in the belief base of the agent.
+%The examples in \Cref{lst:jasdl-example} illustrate how \ac{RDF} triples are represented as \ac{DL} in the belief base of the agent.
 %
 JASDL make use of \jason{}'s standard belief base selection mechanisms,
 while layering a reasoning engine capable of querying ontology instances on top,
@@ -570,52 +571,55 @@ as developers have to translate \ac{RDF} triples into logic predicates adhering 
 
 %
 Other approaches~\cite{DBLP:journals/wias/MascardiABBR14,DBLP:conf/www/CharpenayZLB22, DBLP:conf/semweb/ONeillBBC21, DBLP:conf/emas/CiorteaBR18},
-rely on the ``Agents \& Artifacts'' principle~\cite{DBLP:conf/promas/RicciVO05},
-where artifacts are a set of passive resources and tools encapsulating functionalities and services
+rely on encapsulating functionalities and services in external components 
 that agents can share and exploit to support their activities.
 %
-CooL-AgentSpeak~\cite{DBLP:journals/wias/MascardiABBR14} framework implementation,
-which relies on \cartago{} framework~\cite{DBLP:books/sp/09/RicciPVO09},
-defines the \emph{Ontology Artifact} to equip agents of ontological reasoning capabilities,
-while extending the syntax with \ac{DL} comparable to the one of JASDL.
+The CooL-AgentSpeak~\cite{DBLP:journals/wias/MascardiABBR14} implementation, use a syntax extension similar to JASDL and relies on the \cartago{} framework~\cite{DBLP:books/sp/09/RicciPVO09} to 
+define the \emph{Ontology Artifact} to grant ontological reasoning capabilities to agents.
 %
 Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}, instead,
 is an extension of the \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} programming framework
-for interacting with \ac{WoT} environments.
+for interacting with \ac{WoT} environments through semantic hypermedia.
 %
-Hypermedea does not specialise the \ac{BDI} engine,
-however,
-exploits \ac{DL} to represent \ac{RDF} triples in the agent's belief base,
-as shown in \Cref{lst:hypermedea-example}.
-%
-Four kinds of artifact are defined in Hypermedea:
+Four kinds of artifact are available:
 \begin{inlinelist}
-  \item \textit{Linked Data Artifact} to interact with \ac{RDF} triples,
-  \item \textit{Ontology Artifact} which bridge the gap between \ac{RDF} models and predicate representations,
-  \item \textit{Thing Artifact} which proxies the communication with Things in the environment (i.e. each Thing its own Thing Artifact to interact with it), and
-  \item \textit{Planner Artifact} which synthetize plans given a \textit{domain description} and a \textit{Problem Description}, using PDDL definitions and FF-X planner.
+  \item \textit{Linked Data Artifact} to process \ac{RDF} triples,
+  \item \textit{Ontology Artifact} to simplify the logic representation of triples (see \Cref{lst:hypermedea-example}) and materialize inferences,
+  \item \textit{Thing Artifact} to interact with remote \ac{WoT} Things,
+  and
+  \item \textit{Planner Artifact} to wrap a PDDL planner and synthesize plans at runtime with discovered affordances given a \emph{domain} and \emph{problem} descriptions.
 \end{inlinelist}
 %
 \lstinputlisting[
-  lastline=1,
   language=Prolog,
-  caption={The example shows how \ac{RDF} triples are represented in Hypermedea agents belief base. The example is taken from Hypermedea API reference (https://archive.is/vxULu).},
+  caption={Logic rules showing how \ac{BDI} agents can reason on \ac{RDF} triples in Hypermedea (from \url{https://archive.is/wip/ewvWM})
+  %The example is taken from Hypermedea API reference (https://archive.is/vxULu).
+  },
   label={lst:hypermedea-example}
 ]{listings/hypermedea.txt}
 
-Similarly,
-in \cite{DBLP:conf/semweb/ONeillBBC21} authors propose an alternative approach adopting Astra \ac{BDI} framework,
-which exposes a set of capabilities to perform the interaction without modifying the agent beliefs representation.
+%Similarly,
+%in \cite{DBLP:conf/semweb/ONeillBBC21} authors propose an alternative approach adopting Astra \ac{BDI} framework,
+%which exposes a set of capabilities to perform the interaction without modifying the agent beliefs representation.
+A different approach is used in an extension of ASTRA~\cite{collier2015prima} presented in \cite{DBLP:conf/semweb/ONeillBBC21}
+which uses a set of \emph{modules} to allow \ac{BDI} agents to store knowledge and interact with a ``personal'' triple store separated from the belief base.
+Similarly to other approaches,
+the bridge to belief representation is by mapping triples directly to logic predicates with three arguments.
 
-In line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
-a demonstrator application~\cite{DBLP:conf/emas/CiorteaBR18} was proposed together with the engineering principles that support the integration using the environment.
+% In line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
+% a demonstrator application~\cite{DBLP:conf/emas/CiorteaBR18} was proposed together with the engineering principles that support the integration using the environment.
+Finally, although not directly related to \ac{BDI} agents, the Yggdrasil framework~\cite{ciortea2018emas} provides a hypermedia layer for building \ac{hMAS} environments on top of \cartago{}~\cite{DBLP:books/sp/09/RicciPVO09} artifacts.
 %
-The implementation is proposed using Yggdrasil platform~\cite{ciortea2018emas} for supporting the hypermedia abstraction,
-and the \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} programming framework for agents.
+Since the framework manages only the environment, the bridge to agent beliefs is left to the agent programmer.
+
+% %
+% The implementation is proposed using Yggdrasil platform~\cite{ciortea2018emas} for supporting the hypermedia abstraction,
+% and the \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} programming framework for agents.
 
 \paragraph{Exploiting New Actions at Runtime.}
 
-To exploit new actions \ref{req:actions} \ac{BDI} agents can be extended with a \emph{planner} that can generate new plans at runtime~\cite{MeneguzziS15}.
+To exploit new actions \ref{req:actions} \ac{BDI} agents must have access to a \emph{planner} either within the agent~\cite{MeneguzziS15}, or through the environment---as proposed in Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}.
+
 In the context of \ac{hMAS}, this requires that affordance in the environment are represented to convey information to the agent about how and when to use them and that agents can interpret such information to compose their plans.
 %
 Recent works have explored using \emph{signifiers}~\cite{vachtsevanou2023atal} in hypermedia environments to better convey affordances to agents, and integrated their interpretation within \ac{BDI} agents~\cite{vachtsevanou2024atal}.
@@ -739,9 +743,19 @@ to facilitate their agents to discover new actions at runtime in the hypermedia 
 \label{sec:conclusion}
 %==========================================================
 
-\sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
+In this paper, we present a gap analysis between \ac{BDI} agents and semantic hypermedia,
+showing how the two worlds are difficult to integrate due to the different technologies and paradigms they rely on.
+%
+We identify a set of ideal requirements, finding that none of the surveyed related works fully satisfy them
+and propose to implement them through a generalized \ac{BDI} engine that can be tailored to use \ac{RDF} and \ac{OWL} as knowledge representation technologies.
 
-\gcnote{è uno short position paper, va bene anche senza conclusioni, o se le conclusioni abbozzano semplicemente le sfide e le opportunità del framework proposto.}
+Future works will focus on implementing the architecture proposed in \Cref{sec:generalized-bdi-engine}
+and explore how to support \ac{hMAS} developers with syntax extensions and tools to ease the development of \ac{BDI} agents in hypermedia environments within our \ac{BDI} programming framework \jakta{}~\cite{baiardi2024sncs}.
+
+
+% \sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
+
+% \gcnote{è uno short position paper, va bene anche senza conclusioni, o se le conclusioni abbozzano semplicemente le sfide e le opportunità del framework proposto.}
 
 %%
 %% The acknowledgments section is defined using the "acknowledgments" environment
