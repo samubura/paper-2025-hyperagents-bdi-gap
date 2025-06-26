@@ -367,7 +367,7 @@ and it is up to \ac{BDI} developers.
 In other words,
 implementing the translation is additional work which, if handled manually in an ad-hoc manner can be source of inconsistencies.
 
-\paragraph{Ontological Reasoning}
+\paragraph{Ontological Reasoning.}
 
 \ac{RDF} triplets are commonly paired with \ac{OWL} ontologies (e.g., \texttt{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above),
 providing \emph{axioms} that define the meaning of the triples's predicates 
@@ -408,12 +408,12 @@ making the intertwining with \ac{LP} even deeper.
 % Unification relies on finding a substitution for the variables in a logic formula that makes it true with the facts within a logic theory. When multiple substitutions are possible, the unification process usually returns the first available one, as it is typically implemented as a depth-first search algorithm with backtracking.
 %
 Conversely, 
-the Semantic Web relies on \acs{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
+the Semantic Web relies on \ac{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
 %
-\acs{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples, 
+\ac{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples, 
 providing an intuitive way to query the knowledge base.
 
-Despite both \acs{LP} and \acs{SPARQL} allow expressing declarative queries for a knowledge base,
+Despite both \ac{LP} and \ac{SPARQL} allow expressing declarative queries for a knowledge base,
 the latter may be more practical and efficient for \ac{RDF} data,
 especially when the query spans over multiple triples.
 %
@@ -435,7 +435,7 @@ given the expressiveness limitations of \ac{OWL},
 % An important difference is that while logic unification automatically performs inference, \acs{SPARQL} searches only on the set of triples currently in a knowledge base. If inference is required, the developer must explicitly \emph{materialize} the triples inferred by a reasoner before querying.
 Here, a similar argument like the one above concerning the wrapping of \ac{SWRL} reasoners applies.
 
-\paragraph{Open vs. Close Environments}
+\paragraph{Open vs. Close Environments.}
 
 \ac{BDI} agents are equipped with a predefined set of plans, composed of sequences of actions that the agent knows how to execute.
 %
@@ -459,17 +459,22 @@ The inability to exploit such new affordances may limit the agent in adapting to
 \subsection{Integration Requirements}
 \label{sec:integrating-bdi-hypermedia}
 
-Guided by the gap analysis
+Guided by our gap analysis,
 we identify a set of requirements that we believe may improve practical development of \ac{BDI} agents in Web environments.
+%
 We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} should support the following features:
-\begin{enumerate*}[label={(R\arabic*)}]
+%
+\begin{enumerate*}[label=\textbf{(R\arabic*)}]
   \item direct manipulation of \ac{RDF} and \ac{OWL} triples in the agent's belief base;
   \label{req:direct}
-  \item ontological reasoning and inference for plan selection;
+
+  \item ontological reasoning and inference for deliberation (e.g., plan selection and execution);
   \label{req:reasoning}
-  \item support for querying the belief base using \acs{SPARQL} instead of logic unification;
+
+  \item support for querying the belief base via \acs{SPARQL};
   \label{req:query}
-  \item ability to exploit affordances discovered in the environment to dynamically adapt the agent's plans.
+
+  \item ability to exploit affordances discovered in the environment to dynamically adapt the agents' plans.
   \label{req:actions}
 \end{enumerate*}
 
@@ -482,7 +487,8 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 
 %\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
 
-\paragraph{Semantic extensions of AgentSpeak}
+\paragraph{Semantic extensions of AgentSpeak.}
+
 In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose an AgentSpeak extension named AgentSpeak-DL, 
 where the belief base concepts are extended with the addition of \ac{DL}.
 %
@@ -505,7 +511,8 @@ Therefore,
 they propose an extension of the semantics where the agents lifecycle is enriched with goal states,
 using a belief representation based on \ac{DL}.
 
-\paragraph{Integration of DL in BDI engines}
+\paragraph{Integration of DL in BDI engines.}
+
 The semantic extension AgentSpeak-DL, proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
 %
 In this work, the authors present an extension of the \jason{} \ac{BDI} engine, where key components are adapted to incorporate \ac{DL} semantics.
@@ -557,7 +564,8 @@ Four kind of artifacts are defined in this contribution:
   label={lst:hypermedea-example}
 ]{listings/hypermedea.txt}
 
-\paragraph{Exploiting New Actions at Runtime}
+\paragraph{Exploiting New Actions at Runtime.}
+
 To exploit new actions \ref{req:actions} \ac{BDI} agents can be extended with a \emph{planner} that can generate new plans at runtime~\cite{MeneguzziS15}. 
 In the context of \ac{hMAS}, this requires that affordances in the environment are represented to convey information to the agent about how and when to use them and that agents can interpret such information to compose their plans.
 %
@@ -566,88 +574,129 @@ Recent works have explored using \emph{signifiers}~\cite{vachtsevanou2023atal} i
 A less structured approach is proposed in \cite{10.1145/3603163.3609077} and \cite{schmid2024kgswc} where agents (albeit not \ac{BDI}) are able to select actions in a hypermedia environment by using a \ac{LLM} as an oracle.
 
 %==========================================================
-\section{Levelling the Gap with a Generalised BDI Engine}
+\section{Levelling the Gap with a Generalised \ac{BDI} Engine}
 \label{sec:generalized-bdi-engine}
 %==========================================================
 
-In this section,
-we propose a new approach to bridge the identified gaps between \ac{BDI} agents and semantic hypermedia resources,
-guided by the requirements identified in \Cref{sec:integrating-bdi-hypermedia}.
+To bridge the gap between \ac{BDI} agents and semantic hypermedia,
+we propose a \emph{generalized} \ac{BDI} engine,
+addressing the requirements in \Cref{sec:integrating-bdi-hypermedia}.
 %
-The approach addresses mainly the first gap \ref{gap:logic}, 
-and we believe it represents a first step towards addressing the second gap \ref{gap:open-world} as future work,
-particularly by enabling more expressive \ac{BDI} frameworks.
+This approach primarily tackles gap~\ref{gap:logic}, and lays the groundwork for addressing gap~\ref{gap:open-world} in future work.
+
+The core idea is to create a \ac{BDI} interpreter encapsulating agents reasoning cycle, 
+while decoupling the languages for knowledge representation and manipulation. 
 %
-The core idea is to introduce a generalised \ac{BDI} engine that encapsulates agents reasoning cycle, 
-while decoupling the representation of beliefs from the framework itself. 
+This would allow for tailoring the reasoning mechanisms to application-specific needs.
 %
-This separation allows the reasoning mechanisms to be adapted according to the specific needs of the application domain.
+In this way, 
+beliefs 
+-- and, consequently, reasoning -- 
+can flexibly support different formats depending on the domain at hand.
 %
-In this way, beliefs---and, consequently, reasoning---can flexibly support different formats depending on the domain. 
+In this way, 
+agents can easily be adapted to work with different data formats,
+ranging from \ac{RDF} and \ac{OWL} triples, to JSON, YAML, and other Web standards. 
 %
-A sufficiently generalised \ac{BDI} engine can operate over \ac{RDF} and \ac{OWL} triples, JSON, YAML, or any other structured representation of knowledge, treating them as first-class citizens within the framework. 
-%
-This design fulfills the first requirement (\ref{req:first}).
+Such a design fulfills the first requirement \ref{req:direct}.
+
+\begin{wrapfigure}{R}{.35\linewidth}
+    \centering
+    \caption{Generalized Architecture.}
+    \label{fig:generalized-bdi-architecture}
+    \includegraphics[width=\linewidth]{figures/architecture.pdf}
+\end{wrapfigure}
 
 However,
-as identified also in \cite{DBLP:conf/dalt/MoreiraVBH05}, 
-the \ac{BDI} reasoning cycle is affected by the syntax representation.
+separating the reasoning cycle of \ac{BDI} agents from knowledge representation is complex,
+as the two are deeply intertwined~\cite{DBLP:conf/dalt/MoreiraVBH05}.
 %
-Specifically,
-there are three main operations concerned:
-\begin{itemize} 
-  \item \emph{plan selection} is the process of selecting a plan to achieve a goal among the ones available, 
-  which evaluation of applicability is strictly related on how beliefs are represented in the belief base;
-  \item \emph{belief querying} is the process of retrieving information from the belief base;
-  \item \emph{belief update} is the process of updating the belief base with new information.
-\end{itemize}
+Consider for instance these fundamental operations:
 %
-In \ac{LP}-based frameworks where beliefs are represented as Prolog ground terms, 
-the three operations are typically implemented exploiting logic mechanisms such as unification and inference.
-%
-But in other domains,
-the three operations must be adapted to the specific representation of the beliefs.
-%
-The incarnation of these three operations is in the hands of the person who implementsa responsibility of the developer of the \ac{BDI} engine specialization,
-which specifies how the generic \ac{BDI} engine should operate on the specific representation of the beliefs,
-thus addressing \ref{req:second} and \ref{req:third}. 
+\begin{inlinelist} 
+  \item \emph{plan selection} 
+  % is the process of selecting a plan to achieve a goal among the ones available, 
+  % which evaluation of applicability is strictly related on how beliefs are represented in the belief base;
+  depending on conditions to be tested against the belief base;
 
+  \item \emph{belief querying} 
+  % is the process of retrieving information from the belief base;
+  as part of a plan, for the sake of decision-making;
 
-
-The integration of \ac{BDI} \ac{MAS} with heterogeneous syntax representations 
-can be performed with a layered architecture of the framework.
+  \item \emph{belief update} 
+  % is the process of updating the belief base with new information.
+  for the sake of updating the agent's knowledge, 
+  as part of a course of action.
+\end{inlinelist}
 %
-The layered architecture proposed is composed of: 
-\begin{enumerate}
-  \item \textbf{Generalized \ac{BDI} reasoning model}: encapsulates the general mechanisms of a \ac{BDI} framework, including the agent's deliberation process and reasoning cycle, while remaining agnostic to the syntax and semantics of the underlying belief representation.
+In \ac{LP}-based framework,
+these would simply rely on logic unification and resolution,
+whereas in a generalized \ac{BDI} engine,
+each operation may rely on its own language.
+%
+For instance,
+for a Semantic Hypermedia, 
+one may rely on \ac{RDF} and \ac{OWL} for beliefs representation,
+\acs{SPARQL} for belief querying and update,
+and \ac{SWRL} for plan selection and reasoning%
+%
+% In the latter case,
+% agent developers would be able to plug-in convenient syntaxes and ad-hoc technologies,
+% hence customising how the generic \ac{BDI} engine operates upon beliefs in all such cases,
+---thus addressing \ref{req:reasoning} and \ref{req:query}. 
+
+% The integration of \ac{BDI} \ac{MAS} with heterogeneous syntax representations 
+% can be performed with a layered architecture of the framework.
+% %
+% The layered architecture proposed is composed of: 
+Such a generalized \ac{BDI} engine can be implemented with a layered architecture, 
+depicted in \Cref{fig:generalized-bdi-architecture}, and composed of three main layers.
+%
+Firstly,
+\begin{enumerate*}[label={\arabic*.}]
+  \item the \textbf{generalized \ac{BDI} reasoning layer},
+  where the agent's deliberation process is implemented as a reasoning cycle,
+  yet agnostic to how beliefs are represented and manipulated.
   %
-  Key responsibilities of this layer include:
-  \begin{inlinelist}
-    \item maintains the intention stack updated;
-    \item manages goals lifecycle;
-    \item defines the lifecycle of the agent (i.e. when to perceive, deliberate and act); and
-    \item defines the protocols for belief update, belief retrieval and plan selection.
-  \end{inlinelist}
-  \item \textbf{Concrete Specification Layer}: defines how the abstract operations specified by the generalised \ac{BDI} model are grounded in a specific belief representation. This layer acts as a semantic adapter between the generalised engine and the data, enabling the architecture to support a wide variety of syntax representations without modifying the core reasoning logic.
-  \item \textbf{Application layer}: responsible for defining the concrete goals, plans, and interactions of the agent tailored to a specific environment or task.
-\end{enumerate}
+  This is where,
+  agents' intentions are maintained
+  and updated as agents perceive,
+  decide what to do,
+  and finally act.
+  %
+  Any operation involving belief bases should rely on some \emph{abstract} \acs{API},
+  to be implemented by the next layer.
+  %
+  \item The \textbf{concrete specification layer}: 
+  where the aforementioned \acs{API} are implemented to provide concrete operations on the belief base.
+  %
+  This layer acts as an adapter between the generalized \ac{BDI} reasoner
+  and the specific knowledge representation languages of choice,
+  and their supporting technologies.
+  %
+  Lastly,
+  \item the \textbf{application layer}: 
+  is where actual goals, plans, and interactions of a \ac{MAS} are defined 
+  to tackle some specific use case.
+\end{enumerate*}
 
-The main advantages of this isolation are: reuse of the same reasoning engine across multiple domains, and Better support for semantic web standards and open-world reasoning.
+% The main advantages of this isolation are: reuse of the same reasoning engine across multiple domains, and Better support for semantic web standards and open-world reasoning.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\linewidth]{figures/architecture.pdf}
-  \caption{tbd}
-\end{figure}
-
-
-\sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
+Finally,
+in this framework,
+requirement \ref{req:actions} would be addressable upon need,
+by agent developers directly,
+who would select the best knowledge representation and manipulation languages 
+to facilitate their applicative agents to discover new actions at runtime in the hypermedia environment.
 
 %==========================================================
 \section{Conclusion}
 \label{sec:conclusion}
 %==========================================================
 
+\sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
+
+\gcnote{è uno short position paper, va bene anche senza conclusioni, o se le conclusioni abbozzano semplicemente le sfide e le opportunità del framework proposto.}
 
 %%
 %% The acknowledgments section is defined using the "acknowledgments" environment
