@@ -15,7 +15,7 @@
 \usepackage{my-main-style}
 
 %%
-%% Minted listings support 
+%% Minted listings support
 %% Need pygment <http://pygments.org/> <http://pypi.python.org/pypi/Pygments>
 \usepackage{listings}
 
@@ -87,8 +87,8 @@ email=danilo.pianini@unibo.it,
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Traditional BDI agents, 
-  rooted in logic programming, 
+  Traditional BDI agents,
+  rooted in logic programming,
   remain poorly integrated with the hypermedia nature of open Web environments
   which typically rely on Semantic Web technologies such as RDF and OWL.
   This paper examines the gap between these paradigms and surveys existing integration efforts on a conceptual and technical level.
@@ -100,8 +100,8 @@ email=danilo.pianini@unibo.it,
 %% Keywords. The author(s) should pick words that accurately describe
 %% the work being presented. Separate the keywords with commas.
 \begin{keywords}
-  BDI  \sep 
-  Hypermedia \sep 
+  BDI  \sep
+  Hypermedia \sep
   Agent-Oriented Programming
 \end{keywords}
 
@@ -117,30 +117,30 @@ email=danilo.pianini@unibo.it,
 Integrating intelligent agents with the Web is a long-standing goal
 in both the \ac{MAS}~\cite{DBLP:conf/edoc/ShafiqDF06}
 and Semantic Web~\cite{lassila2001semantic} communities, but,
-despite such common interest, 
-the famous question 
+despite such common interest,
+the famous question
 ``Where are all the intelligent agents?''
 remains unanswered to this day~\cite{hendlerb2007expert}:
-the Web is still dominated by traditional clients, servers, 
+the Web is still dominated by traditional clients, servers,
 and (most recently) bots and scrapers%
 ---which can hardly be considered full agents.
 %
 However,
-as recent developments in Web engineering have led to 
+as recent developments in Web engineering have led to
 the more pervasive adoption of the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02},
 and the growing adoption of Web interoperability standards % even outside the traditional Web domain
 -- for instance with the \ac{WoT}~\cite{wotarch} --
 the integration of \ac{MAS} and the Web gained new momentum.
 
-Along this line, 
+Along this line,
 the \ac{W3C} Autonomous Agents on the Web community group\footnote{\url{https://www.w3.org/community/webagents/}}
 has been founded to connect researchers and practitioners
 and a new perspective has been proposed: \ac{hMAS}~\cite{DBLP:conf/atal/CiorteaMGBRZ19}
 envision the (Semantic) Web as an open environment in which
 agents can interact by consuming and manipulating hypermedia resources.
 
-Even more recently, 
-with the advent of \ac{LLM}-based \emph{Agentic AI}~\cite{acharya2025access} 
+Even more recently,
+with the advent of \ac{LLM}-based \emph{Agentic AI}~\cite{acharya2025access}
 the creation of \ac{LLM}-driven agents that interact with Web APIs~\cite{10.5555/3692070.3692540}
 -- or directly with Websites~\cite{10.5555/3692070.3694608} --
 has gained significant attention.
@@ -148,26 +148,26 @@ has gained significant attention.
 However,
 despite being promising,
 these approaches
-do not make structured knowledge representation obsolete~\cite{pan2024tkde}, 
+do not make structured knowledge representation obsolete~\cite{pan2024tkde},
 and often sacrifice the controllability of traditional agent-programming paradigms
 %to sell the (hollow?) promise of circumventing the need for structured knowledge representation and reasoning~\cite{pan2024tkde}%
 at the price of relaxed guarantees in terms of correctness, and completeness.
 % provided by Semantic Web technologies such as the \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}.
 
 Arguably,
-agents developed with cognitive architectures 
+agents developed with cognitive architectures
 %-- yet symbolic --,
 such as \ac{BDI} agents,
 would retain controllability and predictability,
 if only they could be effectively integrated with the Web:
-they could directly exploit hypermedia to discover new resources and actions, 
-and use Semantic Web technologies like \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12} 
+they could directly exploit hypermedia to discover new resources and actions,
+and use Semantic Web technologies like \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}
 to act intelligently without sacrificing quality.
 %
 However,
 we believe
 the integration of \ac{BDI} agents with the Web
-is hindered by a conceptual and technological gap, 
+is hindered by a conceptual and technological gap,
 which limits developers in creating agents that need to interact with (Semantic) hypermedia.
 %
 More precisely:
@@ -176,37 +176,37 @@ More precisely:
   \ac{BDI} agents are historically tied to \ac{LP}
   %-- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
   whereas the Semantic Web is grounded on \ac{DL},
-  and the two paradigms are theoretically compatible, 
+  and the two paradigms are theoretically compatible,
   but technologically backed by poorly interoperable technologies,
   increasing the burden of developers wishing to integrate them;
   % The different technological choices used to concretely implement them add cognitive load to developers working on the integration of the two worlds (e.g., converting \ac{OWL} and \ac{RDF} triples in Prolog-like formulas);
-  
+
   \item\label{gap:open-world}
-  \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee} 
+  \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee}
   which relies on pre-defined plans and does not natively support discovering new actions at runtime,
   by interacting with the hypermedia environment.
 \end{enumerate*}
 
-In this paper, 
+In this paper,
 we reflect on these gaps,
-their technical implications, % on the overall development experience of creating \ac{BDI} agents that interact with Web resources 
+their technical implications, % on the overall development experience of creating \ac{BDI} agents that interact with Web resources
 explore how this gap is currently being addressed in the \ac{hMAS} community and
 propose how to mitigate it by abstracting the design of agent-oriented programming languages and frameworks.
 % %
-% We start by providing a brief overview of the \ac{BDI} model, 
+% We start by providing a brief overview of the \ac{BDI} model,
 % the hypermedia nature of the (Semantic) Web,
-% and 
+% and
 % the fundamental principles of \ac{hMAS} in \Cref{sec:background}.
 % %
-% We then analyze the gap between \ac{BDI} agents and hypermedia, 
+% We then analyze the gap between \ac{BDI} agents and hypermedia,
 % and identify ideal integration requirements in \Cref{sec:gap-analysis}
 % %
-% Then, 
+% Then,
 % in \Cref{sec:related-works},
-% we test those requirements against prior contributions 
+% we test those requirements against prior contributions
 % which already attempted to bridge the gap between \ac{BDI} agents and semantic hypermedia.
 % %
-% Finally, 
+% Finally,
 % in \Cref{sec:generalized-bdi-engine},
 % We present our research direction
 % aimed at %tightening the integration of \ac{BDI} agents and hypermedia
@@ -244,7 +244,7 @@ and execute them to achieve their goals.
 
 To declaratively define the agent's behavior the \ac{AOP} community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
 %
-Arguably, the most popular language is \agentspeak{}~\cite{DBLP:conf/maamaw/Rao96} which 
+Arguably, the most popular language is \agentspeak{}~\cite{DBLP:conf/maamaw/Rao96} which
 uses a formal syntax and semantics derived from \ac{LP} for representing beliefs, goals and actions using logic predicates.
 %This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
 %The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
@@ -271,7 +271,7 @@ which supports independently evolving components through a set of principles.
 %   \item the use of \ac{HATEOAS} guiding clients in their next possible actions.
 % \end{inlinelist}
 
-The Semantic Web~\cite{BernersLee2001} complements the \emph{self-descriptive} principle of \ac{REST} 
+The Semantic Web~\cite{BernersLee2001} complements the \emph{self-descriptive} principle of \ac{REST}
 by encoding semantics in the representation through the general model of \ac{RDF}~\cite{RDF_Concepts_W3C:14}
 based on machine-readable \emph{triples}
 that state facts using a common vocabulary defined within ontologies.
@@ -319,7 +319,7 @@ In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on
 \label{sec:gap-analysis}
 %==========================================================
 
-% From the brief background presented in \Cref{sec:background}, 
+% From the brief background presented in \Cref{sec:background},
 % it should be evident that
 % despite both \ac{BDI} agents and the Semantic Web being rooted in logic-based knowledge representation,
 % there are significant differences between the two worlds.
@@ -336,25 +336,25 @@ In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on
 
 Here we delve into the details of the gaps that we identified between \ac{BDI} agents and semantic hypermedia,
 namely,
-\ref{gap:logic} the practical differences for knowledge representation and manipulation 
+\ref{gap:logic} the practical differences for knowledge representation and manipulation
 between \ac{LP} and Semantic Web technologies,
-and 
+and
 \ref{gap:open-world} the limitations of \ac{BDI} agents with \emph{open} hypermedia environments,
 where actions are not predefined but discovered at runtime.
 
 \paragraph{Syntactical Differences Between \acs{LP} and \acs{RDF}.}
 
-On a syntactical level, 
+On a syntactical level,
 \ac{BDI} agents commonly represent beliefs as definite clauses\missingref{} %,
 % and goals as facts
 %which are either atomic \emph{terms} (e.g., \texttt{alice}) or a \emph{structure} composed of a \emph{functor} followed by an arbitrary number of \emph{arguments} within parentheses
 (e.g. \texttt{person(alice)}).
 %
-In the Semantic Web, 
+In the Semantic Web,
 knowledge is represented in the form of \ac{RDF} \emph{triples} which connect a \emph{subject} to an \emph{object} through a \emph{predicate} (e.g. \texttt{:alice rdf:type foaf:Person}).
 %
 Although \ac{RDF} triples can be represented as definite clauses~\cite{DBLP:conf/www/GrosofHVD03}
-(while the opposite is not true), 
+(while the opposite is not true),
 in practice,
 semantic knowledge is available on the Web in \ac{RDF},
 and accessing that from \ac{BDI} agents requires a translation step,
@@ -369,7 +369,7 @@ implementing the translation is additional work which, if handled manually in an
 \paragraph{Ontological Reasoning.}
 
 \ac{RDF} triplets are commonly paired with \ac{OWL} ontologies (e.g., \texttt{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above),
-providing \emph{axioms} that define the meaning of the triples's predicates 
+providing \emph{axioms} that define the meaning of the triples's predicates
 (e.g., \texttt{rdf:type} denotes the \emph{instance of} relation between subjects and classes),
 as well as constraints, and relationships between concepts.
 %
@@ -381,7 +381,7 @@ nor being accessed remotely.
 Again,
 there is a hidden trap for \ac{BDI} developers willing to create agents that can perform ontological reasoning:
 % This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
-% developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies. 
+% developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies.
 either they translate the \ac{OWL} ontology into definite clauses,
 or they wrap some \ac{OWL} reasoner into the agent interpreter and reasoning cycle.
 %
@@ -406,10 +406,10 @@ making the intertwining with \ac{LP} even deeper.
 % %
 % Unification relies on finding a substitution for the variables in a logic formula that makes it true with the facts within a logic theory. When multiple substitutions are possible, the unification process usually returns the first available one, as it is typically implemented as a depth-first search algorithm with backtracking.
 %
-Conversely, 
+Conversely,
 the Semantic Web relies on \ac{SPARQL}~\cite{sparqlprotocol} to query \ac{RDF} data.
 %
-\ac{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples, 
+\ac{SPARQL} allows matching graph patterns and retrieve all the values of variables in the pattern from the matched triples,
 providing an intuitive way to query the knowledge base.
 
 Despite both \ac{LP} and \ac{SPARQL} allow expressing declarative queries for a knowledge base,
@@ -427,8 +427,8 @@ and which is commonly worked around via \emph{meta-programming},
 resulting in longer and cumbersome \ac{LP} code.
 
 %
-As for inference, 
-given the expressiveness limitations of \ac{OWL}, 
+As for inference,
+given the expressiveness limitations of \ac{OWL},
 \ac{SWRL}~\cite{horrocks2004swrl} can be used to define inference rules.
 %
 % An important difference is that while logic unification automatically performs inference, \acs{SPARQL} searches only on the set of triples currently in a knowledge base. If inference is required, the developer must explicitly \emph{materialize} the triples inferred by a reasoner before querying.
@@ -439,10 +439,10 @@ Here, a similar argument like the one above concerning the wrapping of \ac{SWRL}
 \ac{BDI} agents are equipped with a predefined set of plans, composed of sequences of actions that the agent knows how to execute.
 %
 Additionally, \ac{BDI} agents usually run in a closed environment,
-which is designed by the developer to provide perceptions to the agents and 
-support the execution of the actions used in the plans~\cite{weyns2007aamas}. 
+which is designed by the developer to provide perceptions to the agents and
+support the execution of the actions used in the plans~\cite{weyns2007aamas}.
 %
-The development process of \ac{BDI} agents is hence based on the fact that a developer anticipates 
+The development process of \ac{BDI} agents is hence based on the fact that a developer anticipates
 the relevant possible settings an agent may encounter and provides plans to handle them.
 %
 This makes it difficult for agents to adapt to unexpected settings or to flexibly incorporate new actions that become available while exploring the environment.
@@ -483,54 +483,66 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 \label{sec:related-works}
 %==========================================================
 
-\sbnote{ho tolto i paragrafi ma non ho integrato, passo la palla a gio prima di conflicts}
+% \sbnote{ho tolto i paragrafi ma non ho integrato, passo la palla a gio prima di conflicts}
 
 
 %\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
 
-In this section, 
-we collect the contributions aimed at integrating \ac{BDI} agents with web environments.
-%
-To best of out knowledge,
-no \ac{BDI} agent programming framework has been designed to explicitly use \ac{RDF} and \ac{OWL} triples \ref{req:direct},
-nor to support querying the belief base using \acs{SPARQL} \ref{req:query}.
-%
+Here we summarize some related works demonstrating how,
+despite the many extensions of AgentSpeak towards \ac{DL},
+the direct exploitation of Semantic Web technologies
+-- namely, \ref{req:direct} --
+in \ac{BDI} \emph{programming} frameworks is still underexplored.
 
 %\paragraph{Semantic extensions of AgentSpeak.}
 
-In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose an AgentSpeak extension named AgentSpeak-DL, 
-to support ontological reasoning (thus, addressing \ref{req:reasoning}).
+In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose AgentSpeak-DL,
+an extension of AgentSpeak to support the $\mathcal{ALC}$ description logic\missingref{}.
 %
-In AgentSpeak-DL, 
-semantic rules for the steps in the reasoning cycle are the same of predicate-logic AgentSpeak,
-but the beliefs representation is extended with \ac{DL} objects and relationships to express \ac{RDF} triples.
+% In AgentSpeak-DL,
+% semantic rules for the steps in the reasoning cycle are the same of predicate-logic AgentSpeak,
+% but the beliefs representation is extended with \ac{DL} objects and relationships to express \ac{RDF} triples.
+% %
+% Their formal semantics description highlights
+% that introducing ontological reasoning
+% affects mainly three operations of the whole AgentSpeak lifecycle, namely:
+% \begin{inlinelist}
+%   \item the Plan research,
+%   \item the query on the Belief Base, and
+%   \item the Belief Update.
+% \end{inlinelist}
+There,
+agents' belief bases consist of $\mathcal{ALC}$ ontologies
+(concepts, roles, and individuals)
+and any operation involving access to the belief base
+(e.g., plan selection, belief update, and query)
+imply either reasoning about or updating those ontologies.
 %
-Their formal semantics description highlights
-that introducing ontological reasoning
-affects mainly three operations of the whole AgentSpeak lifecycle, namely:
-\begin{inlinelist}
-  \item the Plan research, 
-  \item the query on the Belief Base, and 
-  \item the Belief Update.
-\end{inlinelist} 
-%
-AgentSpeak-DL is extended by CooL-AgentSpeak~\cite{DBLP:journals/wias/MascardiABBR14},
-where authors address the need of cooperation between agents by exchanging procedural knowledge, 
-expressed according to different ontologies.
-%
-To do so, 
-CooL-AgentSpeak integrates Coo-BDI~\cite{DBLP:conf/dalt/AnconaM03} and AgentSpeak-DL
-features.
+So,
+AgentSpeak-DL provides the theoretical foundations to support our integration requirements from \Cref{sec:integrating-bdi-hypermedia}.
 
-Oppositely, 
-in \cite{DBLP:conf/iat/HalacED11} authors claim that AgentSpeak-DL does not provide a complete solution for the integration of \ac{BDI} agents and Semantic Web technologies,
-mainly because goals are only represented as events for procedural plans.
+AgentSpeak-DL is then extended by CooL-AgentSpeak~\cite{DBLP:journals/wias/MascardiABBR14},
+where authors explore inter-agent exchange of procedural knowledge~\cite{DBLP:conf/dalt/AnconaM03},
+possibly expressed by different ontologies.
 %
-Therefore, 
-they propose an extension of the AgentSpeak semantics 
-where the agents lifecycle is enriched with goal states,
-where beliefs are logic predicates adapted to represent \ac{DL} objects and relationships,
-like in AgentSpeak-DL.
+% To do so,
+% CooL-AgentSpeak integrates Coo-BDI~\cite{DBLP:conf/dalt/AnconaM03} and AgentSpeak-DL
+% features.
+
+The authors of \cite{DBLP:conf/iat/HalacED11} further extend AgentSpeak-DL
+to account for \emph{goal states}
+(new, suspended, active, succeeded, failed)
+in the agent's lifecycle,
+in such a way that state transitions are tied to conditions expressed in \ac{DL}.
+% claim that AgentSpeak-DL does not provide a complete solution for the integration of \ac{BDI} agents and Semantic Web technologies,
+% mainly because goals are only represented as events for procedural plans.
+%
+% Therefore,
+% they propose an extension of the AgentSpeak semantics
+% where the agents lifecycle is enriched with goal states,
+% where beliefs are logic predicates adapted to represent \ac{DL} objects and relationships,
+% like in AgentSpeak-DL.
+\gcsidenote{Riprendi da qui}
 
 %\paragraph{Integration of DL in BDI engines}
 The semantic extension AgentSpeak-DL, proposed in~\cite{DBLP:conf/dalt/MoreiraVBH05}, serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08}.
@@ -541,7 +553,7 @@ The latter is introduced through "semantically-enriched" literals, represented w
 %
 The examples in \Cref{lst:jasdl-example} illustrate how \ac{RDF} triples are represented as \ac{DL} in the belief base of the agent.
 %
-JASDL make use of \jason{}'s standard belief base selection mechanisms, 
+JASDL make use of \jason{}'s standard belief base selection mechanisms,
 while layering a reasoning engine capable of querying ontology instances on top,
 thus addressing \ref{req:reasoning}.
 %
@@ -551,14 +563,14 @@ as developers have to translate \ac{RDF} triples into logic predicates adhering 
 %
 \lstinputlisting[
   lastline=3,
-  language=Prolog, 
+  language=Prolog,
   caption={On the left, \ac{RDF} triples expressed as predicates in JASDL, on the right their meaning inferres by a \ac{OWL} reasoner. The example is taken from \cite{DBLP:conf/dalt/KlapiscakB08}.},
   label={lst:jasdl-example}
 ]{listings/jasdl.txt}
 
 %
 Other approaches~\cite{DBLP:journals/wias/MascardiABBR14,DBLP:conf/www/CharpenayZLB22, DBLP:conf/semweb/ONeillBBC21, DBLP:conf/emas/CiorteaBR18},
-rely on the ``Agents \& Artifacts'' principle~\cite{DBLP:conf/promas/RicciVO05}, 
+rely on the ``Agents \& Artifacts'' principle~\cite{DBLP:conf/promas/RicciVO05},
 where artifacts are a set of passive resources and tools encapsulating functionalities and services
 that agents can share and exploit to support their activities.
 %
@@ -571,28 +583,28 @@ Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}, instead,
 is an extension of the \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} programming framework
 for interacting with \ac{WoT} environments.
 %
-Hypermedea does not specialise the \ac{BDI} engine, 
+Hypermedea does not specialise the \ac{BDI} engine,
 however,
-exploits \ac{DL} to represent \ac{RDF} triples in the agent's belief base, 
+exploits \ac{DL} to represent \ac{RDF} triples in the agent's belief base,
 as shown in \Cref{lst:hypermedea-example}.
 %
-Four kinds of artifact are defined in Hypermedea: 
+Four kinds of artifact are defined in Hypermedea:
 \begin{inlinelist}
   \item \textit{Linked Data Artifact} to interact with \ac{RDF} triples,
   \item \textit{Ontology Artifact} which bridge the gap between \ac{RDF} models and predicate representations,
   \item \textit{Thing Artifact} which proxies the communication with Things in the environment (i.e. each Thing its own Thing Artifact to interact with it), and
-  \item \textit{Planner Artifact} which synthetize plans given a \textit{domain description} and a \textit{Problem Description}, using PDDL definitions and FF-X planner. 
+  \item \textit{Planner Artifact} which synthetize plans given a \textit{domain description} and a \textit{Problem Description}, using PDDL definitions and FF-X planner.
 \end{inlinelist}
 %
 \lstinputlisting[
   lastline=1,
-  language=Prolog, 
+  language=Prolog,
   caption={The example shows how \ac{RDF} triples are represented in Hypermedea agents belief base. The example is taken from Hypermedea API reference (https://archive.is/vxULu).},
   label={lst:hypermedea-example}
 ]{listings/hypermedea.txt}
 
 Similarly,
-in \cite{DBLP:conf/semweb/ONeillBBC21} authors propose an alternative approach adopting Astra \ac{BDI} framework, 
+in \cite{DBLP:conf/semweb/ONeillBBC21} authors propose an alternative approach adopting Astra \ac{BDI} framework,
 which exposes a set of capabilities to perform the interaction without modifying the agent beliefs representation.
 
 In line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
@@ -603,7 +615,7 @@ and the \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} programming framework for agen
 
 \paragraph{Exploiting New Actions at Runtime.}
 
-To exploit new actions \ref{req:actions} \ac{BDI} agents can be extended with a \emph{planner} that can generate new plans at runtime~\cite{MeneguzziS15}. 
+To exploit new actions \ref{req:actions} \ac{BDI} agents can be extended with a \emph{planner} that can generate new plans at runtime~\cite{MeneguzziS15}.
 In the context of \ac{hMAS}, this requires that affordance in the environment are represented to convey information to the agent about how and when to use them and that agents can interpret such information to compose their plans.
 %
 Recent works have explored using \emph{signifiers}~\cite{vachtsevanou2023atal} in hypermedia environments to better convey affordances to agents, and integrated their interpretation within \ac{BDI} agents~\cite{vachtsevanou2024atal}.
@@ -621,19 +633,19 @@ addressing the requirements in \Cref{sec:integrating-bdi-hypermedia}.
 %
 This approach primarily tackles gap~\ref{gap:logic}, while leaving the exploration of gap~\ref{gap:open-world} -- benefitting from the modularity of the engine -- to future works.
 
-The core idea is to create a \ac{BDI} interpreter encapsulating agents reasoning cycle, 
-while decoupling the specific technology used for knowledge representation and manipulation. 
+The core idea is to create a \ac{BDI} interpreter encapsulating agents reasoning cycle,
+while decoupling the specific technology used for knowledge representation and manipulation.
 %
 This would allow for tailoring the reasoning mechanisms to application-specific needs.
 %
-In this way, 
-beliefs 
--- and, consequently, reasoning -- 
+In this way,
+beliefs
+-- and, consequently, reasoning --
 can flexibly support different formats depending on the domain at hand.
 %
-In this way, 
+In this way,
 agents can easily be adapted to work with different data formats,
-ranging from \ac{RDF} triples, to JSON, YAML, and other Web standards. 
+ranging from \ac{RDF} triples, to JSON, YAML, and other Web standards.
 %
 Such a design fulfills the first requirement \ref{req:direct}.
 
@@ -650,19 +662,19 @@ as the two are deeply intertwined~\cite{DBLP:conf/dalt/MoreiraVBH05}.
 %
 Consider for instance these fundamental operations:
 %
-\begin{inlinelist} 
-  \item \emph{plan selection} 
-  % is the process of selecting a plan to achieve a goal among the ones available, 
+\begin{inlinelist}
+  \item \emph{plan selection}
+  % is the process of selecting a plan to achieve a goal among the ones available,
   % which evaluation of applicability is strictly related on how beliefs are represented in the belief base;
   depending on conditions to be tested against the belief base;
 
-  \item \emph{belief querying} 
+  \item \emph{belief querying}
   % is the process of retrieving information from the belief base;
   as part of a plan, for the sake of decision-making;
 
-  \item \emph{belief update} 
+  \item \emph{belief update}
   % is the process of updating the belief base with new information.
-  for the sake of updating the agent's knowledge, 
+  for the sake of updating the agent's knowledge,
   as part of a course of action.
 \end{inlinelist}
 %
@@ -672,7 +684,7 @@ whereas in a generalized \ac{BDI} engine,
 each operation may rely on different matching strategies.
 %
 For instance,
-for Semantic Hypermedia agent, 
+for Semantic Hypermedia agent,
 one may rely on \ac{RDF} and \ac{OWL} for beliefs representation,
 \acs{SPARQL} for belief querying and update,
 and \ac{SWRL} for plan selection and reasoning%
@@ -680,13 +692,13 @@ and \ac{SWRL} for plan selection and reasoning%
 % In the latter case,
 % agent developers would be able to plug-in convenient syntaxes and ad-hoc technologies,
 % hence customising how the generic \ac{BDI} engine operates upon beliefs in all such cases,
----thus addressing \ref{req:reasoning} and \ref{req:query}. 
+---thus addressing \ref{req:reasoning} and \ref{req:query}.
 
-% The integration of \ac{BDI} \ac{MAS} with heterogeneous syntax representations 
+% The integration of \ac{BDI} \ac{MAS} with heterogeneous syntax representations
 % can be performed with a layered architecture of the framework.
 % %
-% The layered architecture proposed is composed of: 
-Such a generalized \ac{BDI} engine can be implemented with a layered architecture, 
+% The layered architecture proposed is composed of:
+Such a generalized \ac{BDI} engine can be implemented with a layered architecture,
 depicted in \Cref{fig:generalized-bdi-architecture}, and composed of three main layers.
 %
 Firstly,
@@ -704,22 +716,22 @@ Firstly,
   Any operation involving belief bases should rely on some \emph{abstract} \acs{API},
   to be implemented by the next layer.
   %
-  \item The \textbf{concrete specification layer}: 
+  \item The \textbf{concrete specification layer}:
   where the aforementioned \acs{API} are implemented to provide concrete operations on the belief base.
   %
   This layer acts as an adapter between the generalized \ac{BDI} reasoner
   and the specific knowledge representation technologies of choice.
   %
   Lastly,
-  \item the \textbf{application layer}: 
-  is where actual goals, plans, and interactions of a \ac{MAS} are defined 
+  \item the \textbf{application layer}:
+  is where actual goals, plans, and interactions of a \ac{MAS} are defined
   to tackle some specific use case.
 \end{enumerate*}
 
 % The main advantages of this isolation are: reuse of the same reasoning engine across multiple domains, and Better support for semantic web standards and open-world reasoning.
 
-Requirement \ref{req:actions} although not directly addressed by the approach, 
-could be integrated with the techniques already being explored in the \ac{hMAS} community (cf. \Cref{sec:related-works}), benefitting from the possibility of choosing the most suitable knowledge representation technology 
+Requirement \ref{req:actions} although not directly addressed by the approach,
+could be integrated with the techniques already being explored in the \ac{hMAS} community (cf. \Cref{sec:related-works}), benefitting from the possibility of choosing the most suitable knowledge representation technology
 to facilitate their agents to discover new actions at runtime in the hypermedia environment.
 
 %==========================================================
@@ -737,7 +749,7 @@ to facilitate their agents to discover new actions at runtime in the hypermedia 
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
 \begin{acknowledgments}
-  \sbnote{Add Acks} 
+  \sbnote{Add Acks}
 \end{acknowledgments}
 
 %% The declaration on generative AI comes in effect
@@ -748,9 +760,9 @@ to facilitate their agents to discover new actions at runtime in the hypermedia 
 %   {\em Either:}\newline
 %   The author(s) have not employed any Generative AI tools.
 %   \newline
-  
+
 %  \noindent{\em Or (by using the activity taxonomy in ceur-ws.org/genai-tax.html):\newline}
-%  During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar and spelling check. Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate images. After using these tool(s)/service(s), the author(s) reviewed and edited the content as needed and take(s) full responsibility for the publication’s content. 
+%  During the preparation of this work, the author(s) used X-GPT-4 and Gramby in order to: Grammar and spelling check. Further, the author(s) used X-AI-IMG for figures 3 and 4 in order to: Generate images. After using these tool(s)/service(s), the author(s) reviewed and edited the content as needed and take(s) full responsibility for the publication’s content.
 \sbnote{TODO check commented text above, sicuramente usato copilot per la scrittura}
 
 %%
