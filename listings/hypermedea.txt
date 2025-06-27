@@ -1,4 +1,7 @@
-rdf("http://example.org/alice", "http://example.org/name", "Alice") [ rdf_type_map(uri, uri, literal) ] .
-rdf("http://example.org/alice", "http://example.org/age", 42) [ rdf_type_map(uri, uri, literal) ] .
-rdf("http://example.org/alice", "http://example.org/knows", someone) [ rdf_type_map(uri, uri, bnode) ] .
-rdf("http://example.org/alice", "http://www.w3.org/1999/02/22-rdf-syntax-ns\#type", "http://example.org/Person") [ rdf_type_map(uri, uri, uri) ] .
+// plain RDF form
+targetEquipment(Machine) :-
+  rdf("https://territoire.emse.fr/kg/emse/fayol", "https://w3id.org/bot#containsElement", Machine) &
+  rdf(Machine, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://www.productontology.org/id/Filler_(packaging)") .
+
+// equivalent short form based on OntologyArtifact properties
+targetEquipment(Machine) :- containsElement(fayol, Machine) & 'Filler_(packaging)'(Machine).

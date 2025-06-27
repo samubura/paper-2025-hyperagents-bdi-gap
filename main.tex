@@ -93,7 +93,7 @@ email=danilo.pianini@unibo.it,
   which typically rely on Semantic Web technologies such as RDF and OWL.
   This paper examines the gap between these paradigms and surveys existing integration efforts on a conceptual and technical level.
   Our proposal for a deeper integration relies on a generalized BDI engine to enable the development of BDI agents that can directly reason and operate on semantic hypermedia resources.
-  We reflect on the potential benefits and challenges of this approach, showing an abstract architecture that is guiding the re-design of our agent programming framework \jakta{}.
+  We reflect on the potential benefits and challenges of this approach, showing an abstract architecture that can be tailored to support different types of beliefs and reasoning mechanisms.
 \end{abstract}
 
 %%
@@ -489,23 +489,23 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 %\sbnote{Related works, JASDL (Jason+Ontological reasoning), Yggdrasil framework, Hypermedea (Saint-Etienne Cartago Artifacts for Hypermedia), others.... }
 
 Here we summarize some related works demonstrating how,
-despite the many extensions of AgentSpeak towards \ac{DL},
+despite the many extensions of \agentspeak{} towards \ac{DL},
 the direct exploitation of Semantic Web technologies
 -- namely, \ref{req:direct} --
 in \ac{BDI} \emph{programming} frameworks is still underexplored.
 
-% \paragraph{Semantic extensions of AgentSpeak.}
+% \paragraph{Semantic extensions of \agentspeak{}.}
 
-In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose AgentSpeak-DL,
-an extension of AgentSpeak to support the $\mathcal{ALC}$ description logic\missingref{}.
+In \cite{DBLP:conf/dalt/MoreiraVBH05} authors propose \agentspeakdl{},
+an extension of \agentspeak{} to support the $\mathcal{ALC}$ description logic\missingref{}.
 %
-% In AgentSpeak-DL,
-% semantic rules for the steps in the reasoning cycle are the same of predicate-logic AgentSpeak,
+% In \agentspeakdl{},
+% semantic rules for the steps in the reasoning cycle are the same of predicate-logic \agentspeak{},
 % but the beliefs representation is extended with \ac{DL} objects and relationships to express \ac{RDF} triples.
 % %
 % Their formal semantics description highlights
 % that introducing ontological reasoning
-% affects mainly three operations of the whole AgentSpeak lifecycle, namely:
+% affects mainly three operations of the whole \agentspeak{} lifecycle, namely:
 % \begin{inlinelist}
 %   \item the Plan research,
 %   \item the query on the Belief Base, and
@@ -519,35 +519,35 @@ and any operation involving access to the belief base
 imply either reasoning about or updating those ontologies.
 %
 So,
-AgentSpeak-DL provides the theoretical foundations to support our integration requirements from \Cref{sec:integrating-bdi-hypermedia}.
+\agentspeakdl{} provides the theoretical foundations to support our integration requirements from \Cref{sec:integrating-bdi-hypermedia}.
 
-AgentSpeak-DL is then extended by CooL-AgentSpeak~\cite{DBLP:journals/wias/MascardiABBR14},
+\agentspeakdl{} is then extended by CooL-\agentspeak{}~\cite{DBLP:journals/wias/MascardiABBR14},
 where authors explore inter-agent exchange of procedural knowledge~\cite{DBLP:conf/dalt/AnconaM03},
 possibly expressed by different ontologies.
 %
 % To do so,
-% CooL-AgentSpeak integrates Coo-BDI~\cite{DBLP:conf/dalt/AnconaM03} and AgentSpeak-DL
+% CooL-\agentspeak{} integrates Coo-BDI~\cite{DBLP:conf/dalt/AnconaM03} and \agentspeakdl{}
 % features.
 
-The authors of \cite{DBLP:conf/iat/HalacED11} further extend AgentSpeak-DL
+The authors of \cite{DBLP:conf/iat/HalacED11} further extend \agentspeakdl{}
 to account for \emph{goal states}
 (new, suspended, active, succeeded, failed)
 in the agent's lifecycle,
 in such a way that state transitions are tied to conditions expressed in \ac{DL}.
-% claim that AgentSpeak-DL does not provide a complete solution for the integration of \ac{BDI} agents and Semantic Web technologies,
+% claim that \agentspeakdl{} does not provide a complete solution for the integration of \ac{BDI} agents and Semantic Web technologies,
 % mainly because goals are only represented as events for procedural plans.
 %
 % Therefore,
-% they propose an extension of the AgentSpeak semantics
+% they propose an extension of the \agentspeak{} semantics
 % where the agents lifecycle is enriched with goal states,
 % where beliefs are logic predicates adapted to represent \ac{DL} objects and relationships,
-% like in AgentSpeak-DL.
+% like in \agentspeakdl{}.
 % \gcsidenote{Riprendi da qui}
 
 % \paragraph{Integrating \ac{DL} and \ac{BDI}.}
 
-AgentSpeak-DL is also the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08},
-i.e., an implementation of AgentSpeak-DL in \jason{}~\cite{bordini2007programming}.
+\agentspeakdl{} is also the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08},
+i.e., an implementation of \agentspeakdl{} in \jason{}~\cite{bordini2007programming}.
 %
 The key extension in JASDL are ``semantically-enriched literals'', 
 i.e. $\mathcal{ALC}$ statements, 
@@ -579,7 +579,7 @@ rely on the ``Agents \& Artifacts'' meta-model~\cite{DBLP:conf/promas/RicciVO05}
 using artifacts to mediate the interaction among agents and the semantic hypermedia environment.
 %
 For instance
-CooL-AgentSpeak~\cite{DBLP:journals/wias/MascardiABBR14} relies on \cartago{}~\cite{DBLP:books/sp/09/RicciPVO09},
+CooL-\agentspeak{}~\cite{DBLP:journals/wias/MascardiABBR14} relies on \cartago{}~\cite{DBLP:books/sp/09/RicciPVO09},
 to define and implement the \emph{Ontology Artifact},
 providing agents with ontological reasoning capabilities%
 ---under the assumption that agent's belief bases contain \ac{DL} statements similarly to JASDL.
@@ -608,9 +608,9 @@ and the synthesis of plans via PDDL specification and calls to the FF-X planner\
 % \end{inlinelist}
 %
 \lstinputlisting[float,
-  lastline=1,
+  % lastline=1,
   language=Java,
-  caption={The example shows how \ac{RDF} triples are represented in Hypermedea agents belief base. The example is taken from Hypermedea API reference (https://archive.is/vxULu).},
+  caption={The example shows how \ac{RDF} triples are represented in Hypermedea agents belief base. The example is taken from Hypermedea \ac{API} reference (https://archive.is/vxULu).},
   captionpos=b,
   label={lst:hypermedea-example}
 ]{listings/hypermedea.txt}
@@ -762,9 +762,19 @@ to facilitate their agents to discover new actions at runtime in the hypermedia 
 \label{sec:conclusion}
 %==========================================================
 
-\sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
+In this paper, we present a gap analysis between \ac{BDI} agents and semantic hypermedia,
+showing how the two worlds are difficult to integrate due to the different technologies and paradigms they rely on.
+%
+We identify a set of ideal requirements, finding that none of the surveyed related works fully satisfy them
+and propose to implement them through a generalized \ac{BDI} engine that can be tailored to use \ac{RDF} and \ac{OWL} as knowledge representation technologies.
 
-\gcnote{è uno short position paper, va bene anche senza conclusioni, o se le conclusioni abbozzano semplicemente le sfide e le opportunità del framework proposto.}
+Future works will focus on implementing the architecture proposed in \Cref{sec:generalized-bdi-engine}
+and explore how to support \ac{hMAS} developers with syntax extensions and tools to ease the development of \ac{BDI} agents in hypermedia environments within our \ac{BDI} programming framework \jakta{}~\cite{baiardi2024sncs}.
+
+
+% \sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
+
+% \gcnote{è uno short position paper, va bene anche senza conclusioni, o se le conclusioni abbozzano semplicemente le sfide e le opportunità del framework proposto.}
 
 %%
 %% The acknowledgments section is defined using the "acknowledgments" environment
