@@ -491,7 +491,7 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 Here we summarize some related works demonstrating how,
 despite the many extensions of \agentspeak{} towards \ac{DL},
 the direct exploitation of Semantic Web technologies
--- namely, \ref{req:direct} --
+-- namely, \ref{req:direct} and \ref{req:query} --
 in \ac{BDI} \emph{programming} frameworks is still underexplored.
 
 % \paragraph{Semantic extensions of \agentspeak{}.}
@@ -512,11 +512,11 @@ an extension of \agentspeak{} to support the $\mathcal{ALC}$ description logic~\
 %   \item the Belief Update.
 % \end{inlinelist}
 There,
-agents' belief bases consist of $\mathcal{ALC}$ ontologies
+agents' belief bases consist of an $\mathcal{ALC}$ ontology
 (concepts, roles, and individuals)
 and any operation involving access to the belief base
 (e.g., plan selection, belief update, and query)
-imply either reasoning about or updating those ontologies.
+imply either reasoning about or updating such ontology.
 %
 So,
 \agentspeakdl{} provides the theoretical foundations to support our integration requirements from \Cref{sec:integrating-bdi-hypermedia}.
@@ -529,7 +529,7 @@ possibly expressed by different ontologies.
 % CooL-\agentspeak{} integrates Coo-BDI~\cite{DBLP:conf/dalt/AnconaM03} and \agentspeakdl{}
 % features.
 
-The authors of \cite{DBLP:conf/iat/HalacED11} further extend \agentspeakdl{}
+The authors of \cite{DBLP:conf/iat/HalacED11} provide a different theoretical integration of \agentspeak{} with \ac{DL}
 to account for \emph{goal states}
 (new, suspended, active, succeeded, failed)
 in the agent's lifecycle,
@@ -572,33 +572,33 @@ at the (non-neglible) price of translating \ac{RDF} triples into JASDL-compatibl
 ]{listings/jasdl.txt}
 
 %
-Other approaches~\cite{DBLP:journals/wias/MascardiABBR14,DBLP:conf/www/CharpenayZLB22, DBLP:conf/semweb/ONeillBBC21, DBLP:conf/emas/CiorteaBR18},
-rely on the ``Agents \& Artifacts'' meta-model~\cite{DBLP:conf/promas/RicciVO05},
+Other approaches~\cite{DBLP:journals/wias/MascardiABBR14,DBLP:conf/www/CharpenayZLB22, DBLP:conf/semweb/ONeillBBC21, DBLP:conf/emas/CiorteaBR18}, rely on encapsulating functionalities and services in external components that agents can share and exploit to support their activities.
 % where artifacts are a set of passive resources and tools encapsulating functionalities and services
 % that agents can share and exploit to support their activities.
-using artifacts to mediate the interaction among agents and the semantic hypermedia environment.
+% using artifacts to mediate the interaction among agents and the semantic hypermedia environment.
 %
 For instance
 CooL-\agentspeak{}~\cite{DBLP:journals/wias/MascardiABBR14} relies on \cartago{}~\cite{DBLP:books/sp/09/RicciPVO09},
 to define and implement the \emph{Ontology Artifact},
 providing agents with ontological reasoning capabilities%
----under the assumption that agent's belief bases contain \ac{DL} statements similarly to JASDL.
+---encoding \ac{DL} statements as beliefs similarly to JASDL.
 
 Similarly, 
-Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22} extends \jacamo{}~\cite{BOISSIER2013747} \ac{BDI} to support semantic hypermedia
--- again, via artifacts and constraints on the beliefs-base syntax --,
-and, in particular, the \ac{WoT}.
+Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22} extends \jacamo{}~\cite{BOISSIER2013747}
+-- again, via artifacts and constraints on the beliefs-base syntax --
+to support agents interacting with semantic hypermedia and, in particular, the \ac{WoT}.
 %
 More precisely,
-Hypermedea assumes that agents' belief bases contain facts as the ones in \Cref{lst:hypermedea-example}%
+Hypermedea \emph{artifacts} produce agent beliefs as the ones in \Cref{lst:hypermedea-example}
+through observable properties
 ---i.e., \ac{RDF} triples expressed as logic predicates,
 in Jason's syntax.
 %
 Furthermore, 
-Hypermedea endows agents with ad-hoc \emph{artifacts} 
-to support the manipulation of such \ac{RDF} triples,
-as well as the interaction with the \acs{WoT}'s \emph{things},
-and the synthesis of plans via PDDL specification and calls to the FF-X planner\missingref{}%
+other \emph{artifacts} support the manipulation of such \ac{RDF} triples,
+materialization of ontological inferences,
+as well as the interaction with \acs{WoT}'s \emph{things},
+and the synthesis of plans via a PDDL planner
 ---hence addressing \ref{req:actions}.
 % \begin{inlinelist}
 %   \item \textit{Linked Data Artifact} to interact with \ac{RDF} triples,
@@ -614,25 +614,25 @@ and the synthesis of plans via PDDL specification and calls to the FF-X planner\
   captionpos=b,
   label={lst:hypermedea-example}
 ]{listings/hypermedea.txt}
-%
-The authors of \cite{DBLP:conf/semweb/ONeillBBC21}
-propose a similar approach, based on Astra~\cite{CollierRL15} instead of \jacamo{}.
-%
-There,
-agents are equipped with a set of capabilities to interact with the hypermedia environment,
-without posing particular constraints on the beliefs-base syntax.
 
-Finally,
-in line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
-the authors of~\cite{DBLP:conf/emas/CiorteaBR18} propose a demonstrator application,
-% together with the engineering principles that support the integration using the environment.
-based on Yggdrasil~\cite{ciortea2018emas} for supporting the hypermedia abstraction,
-and on \jacamo{}~\cite{BOISSIER2013747} for implementing agents and artifacts.
+A different take is proposed in \cite{DBLP:conf/semweb/ONeillBBC21}
+where Astra~\cite{CollierRL15} agents are equipped with a set of \emph{modules} to allow \ac{BDI} agents to store knowledge and interact with a ``personal'' triple store separated from the belief base.
+Similarly to other approaches,
+the bridge to belief representation is by mapping triples directly to logic predicates with three arguments.
 
-\paragraph{Discovering Actions Autonomously at Runtime.}
+Finally, although not directly related to \ac{BDI} agents, the Yggdrasil framework~\cite{ciortea2018emas} provides a hypermedia layer for building \ac{hMAS} environments on top of \cartago{} artifacts
+and has been used to implement \ac{hMAS} applications with the \jacamo{} framework.
 
-To let agents discover new actions autonomously \ref{req:actions},
-\ac{BDI} agents can be equipped with a \emph{planner} that can generate new plans at runtime~\cite{MeneguzziS15}.
+% Finally,
+% in line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
+% the authors of~\cite{DBLP:conf/emas/CiorteaBR18} propose a demonstrator application,
+% % together with the engineering principles that support the integration using the environment.
+% based on Yggdrasil~\cite{ciortea2018emas} for supporting the hypermedia abstraction,
+% and on \jacamo{}~\cite{BOISSIER2013747} for implementing agents and artifacts.
+
+\paragraph{Exploiting Discovered Actions at Runtime.}
+
+To exploit new actions discovered at runtime \ref{req:actions} \ac{BDI} agents must have access to a \emph{planner} either within the agent -- see ~\cite{MeneguzziS15} for a general overview of planning in \ac{BDI} agents -- or through the environment---as proposed in Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}.
 %
 In the context of \ac{hMAS}, 
 this requires that affordances in the environment 
