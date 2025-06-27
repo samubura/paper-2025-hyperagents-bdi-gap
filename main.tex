@@ -724,13 +724,12 @@ and \ac{SWRL} for plan selection and reasoning%
 Such a generalized \ac{BDI} engine can be implemented with a layered architecture,
 depicted in \Cref{fig:generalized-bdi-architecture}, and composed of three main layers.
 %
-Firstly,
-\begin{enumerate*}[label={\arabic*.}]
-  \item the \textbf{generalized \ac{BDI} reasoning layer},
+\begin{enumerate*}[label={\emph{Layer \arabic*}:}]
+  \item \textbf{generalized \ac{BDI} reasoning layer},
   where the agent's deliberation process is implemented as a reasoning cycle,
   yet agnostic to how beliefs are represented and manipulated.
   %
-  This is where,
+  This is where
   agents' intentions are maintained
   and updated as agents perceive,
   decide what to do,
@@ -739,15 +738,15 @@ Firstly,
   Any operation involving belief bases should rely on some \emph{abstract} \acs{API},
   to be implemented by the next layer.
   %
-  \item The \textbf{concrete specification layer}:
+  \item \textbf{concrete specification layer},
   where the aforementioned \acs{API} is implemented to provide concrete operations on the belief base.
   %
   This layer acts as an adapter between the generalized \ac{BDI} reasoner
   and the specific knowledge representation technologies of choice.
   %
   Lastly,
-  \item the \textbf{application layer}:
-  is where actual goals, plans, and interactions of a \ac{MAS} are defined
+    \item \textbf{application layer},
+  where actual goals, plans, and interactions of a \ac{MAS} are defined
   to tackle some specific use case.
 \end{enumerate*}
 
@@ -768,8 +767,10 @@ showing how the two worlds are difficult to integrate due to the different techn
 We identify a set of ideal requirements, finding that none of the surveyed related works fully satisfy them
 and propose to implement them through a generalized \ac{BDI} engine that can be tailored to use \ac{RDF} and \ac{OWL} as knowledge representation technologies.
 
-Future works will focus on implementing the architecture proposed in \Cref{sec:generalized-bdi-engine}
-and explore how to support \ac{hMAS} developers with syntax extensions and tools to ease the development of \ac{BDI} agents in hypermedia environments within our \ac{BDI} programming framework \jakta{}~\cite{baiardi2024sncs}.
+Future work will focus on implementing the architecture proposed in \Cref{sec:generalized-bdi-engine}
+and explore how to support \ac{hMAS} developers with syntax extensions
+and tools to ease the development of \ac{BDI} agents in hypermedia environments
+within our \ac{BDI} programming framework \jakta{}~\cite{baiardi2024sncs}.
 
 
 % \sbnote{Challenges and opportunities of the approach, e.g. ontological reasoning and inference, Belief consistency, "goal" definition and management, }
