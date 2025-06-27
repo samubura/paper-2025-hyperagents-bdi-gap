@@ -128,9 +128,9 @@ and (most recently) bots and scrapers%
 %
 However,
 as recent developments in Web engineering have led to
-the more pervasive adoption of the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02},
+the pervasive use of the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02},
 and the growing adoption of Web interoperability standards % even outside the traditional Web domain
--- for instance with the \ac{WoT}~\cite{wotarch} --
+-- for instance the \ac{WoT}~\cite{wotarch} --,
 the integration of \ac{MAS} and the Web gained new momentum.
 
 Along this line,
@@ -156,14 +156,12 @@ at the price of relaxed guarantees in terms of correctness, and completeness.
 % provided by Semantic Web technologies such as the \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}.
 
 Arguably,
-agents developed with cognitive architectures
-%-- yet symbolic --,
+Web-integrated agents developed with cognitive architectures,
 such as \ac{BDI} agents,
-would retain controllability and predictability,
-if only they could be effectively integrated with the Web:
+would retain controllability and predictability:
 they could directly exploit hypermedia to discover new resources and actions,
 and use Semantic Web technologies like \ac{RDF}~\cite{RDF_Concepts_W3C:14} and \ac{OWL}~\cite{OWL_Syntax_W3C:12}
-to act intelligently without sacrificing quality.
+to act intelligently without compromising on quality.
 %
 However,
 we believe
@@ -177,15 +175,15 @@ More precisely:
   \ac{BDI} agents are historically tied to \ac{LP}
   %-- e.g., with the popular \agentspeak{} semantic~\cite{DBLP:conf/maamaw/Rao96} --
   whereas the Semantic Web is grounded on \ac{DL},
-  and the two paradigms are theoretically compatible,
-  but technologically backed by poorly interoperable technologies,
-  increasing the burden of developers wishing to integrate them;
+  and although the two paradigms are theoretically compatible,
+  their practical implementations interoperate poorly,
+  increasing integration cost significantly;
   % The different technological choices used to concretely implement them add cognitive load to developers working on the integration of the two worlds (e.g., converting \ac{OWL} and \ac{RDF} triples in Prolog-like formulas);
 
   \item\label{gap:open-world}
-  \ac{BDI} agents are typically implemented with the \ac{PRS} architecture~\cite{georgeff1986pieee}
+  \ac{BDI} agents are typically based on the \ac{PRS} architecture~\cite{georgeff1986pieee}
   which relies on pre-defined plans and does not natively support discovering new actions at runtime,
-  by interacting with the hypermedia environment.
+  a necessary feature to interact proficiently with hypermedia environments.
 \end{enumerate*}
 
 In this paper,
