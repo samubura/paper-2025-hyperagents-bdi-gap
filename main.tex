@@ -631,8 +631,20 @@ where Astra~\cite{CollierRL15} agents are equipped with a set of \emph{modules} 
 Similarly to other approaches,
 the bridge to belief representation is by mapping triples directly to logic predicates with three arguments.
 
-Finally, although not directly related to \ac{BDI} agents, the Yggdrasil framework~\cite{ciortea2018emas} provides a hypermedia layer for building \ac{hMAS} environments on top of \cartago{} artifacts
+Although not directly related to \ac{BDI} agents, 
+the Yggdrasil framework~\cite{ciortea2018emas} provides a hypermedia layer for building \ac{hMAS} environments on top of \cartago{} artifacts
 and has been used to implement \ac{hMAS} applications with the \jacamo{} framework.
+
+Finally, 
+there's also a similar work that goes in the direction of abstracting the reasoning cycle of \ac{BDI} agents from the underlying knowledge representation~\cite{novak2006atal}.
+%
+In this work, 
+authors propose a modular \ac{BDI} architecture to provide support for various logic-based knowledge representation techniques, 
+to ease the adoption of \ac{BDI} implementations in mainstream programming languages.
+%
+Although the modularity intuition goes in the same direction of our proposal,
+this work does not assume that \ac{FOL} can be completely replaced by other mechanisms,
+thus limiting the applicability of their approach in other context, such as the hypermedia one.
 
 % Finally,
 % in line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
