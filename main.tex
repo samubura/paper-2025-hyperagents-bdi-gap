@@ -373,7 +373,7 @@ and it is up to \ac{BDI} developers.
 In other words,
 implementing the translation is additional work which, if handled manually in an ad-hoc manner can be source of inconsistencies.
 
-\paragraph{Ontological Reasoning.}
+\paragraph{Ontological Inference.}
 
 \ac{RDF} triplets are commonly paired with \ac{OWL} ontologies (e.g., \texttt{foaf}\footnote{\url{http://xmlns.com/foaf/spec/}} in the example above),
 providing \emph{axioms} that define the meaning of the triples's predicates
@@ -386,7 +386,7 @@ Logic programs, instead, are not really meant to be scattered over the Web,
 nor being accessed remotely.
 
 Again,
-there is a hidden trap for \ac{BDI} developers willing to create agents that can perform ontological reasoning:
+there is a hidden trap for \ac{BDI} developers willing to create agents that can perform ontological inference:
 % This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
 % developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies.
 either they translate the \ac{OWL} ontology into definite clauses,
@@ -400,7 +400,7 @@ and should rather be addressed with direct support from the \ac{BDI} framework.
 % it can be cumbersome for \ac{BDI} developers to exploit them when writing the agent program
 % and similarly hard for Semantic Web experts to understand how to properly interact with the translated knowledge base.
 
-\paragraph{Querying and Inference.}
+\paragraph{Querying.}
 
 \ac{BDI} commonly relies on \ac{SLD} resolution~\cite{emden1976jacm} to query the belief base,
 when this is implemented as a logic program.
@@ -474,7 +474,7 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
   \item direct manipulation of \ac{RDF} and \ac{OWL} triples in the agent's belief base;
   \label{req:direct}
 
-  \item ontological reasoning and inference for deliberation (e.g., plan selection and execution);
+  \item ontological inference for deliberation (e.g., plan selection and execution);
   \label{req:reasoning}
 
   \item support for querying the belief base via \acs{SPARQL};
@@ -523,7 +523,7 @@ agents' belief bases consist of an $\mathcal{ALC}$ ontology
 (concepts, roles, and individuals)
 and any operation involving access to the belief base
 (e.g., plan selection, belief update, and query)
-imply either reasoning about or updating such ontology.
+imply either performing inference or updating such ontology.
 %
 So,
 \agentspeakdl{} provides the theoretical foundations to support our integration requirements from \Cref{sec:integrating-bdi-hypermedia}.
@@ -565,7 +565,7 @@ with ordinary Jason syntax for beliefs
 % The examples in \Cref{lst:jasdl-example} illustrate how \ac{RDF} triples are represented as \ac{DL} in the belief base of the agent.
 %
 JASDL uses \jason{}'s standard belief-base management mechanisms,
-while wrapping and adapting a semantic reasoner to let agents perform ontological reasoning,
+while wrapping and adapting a semantic reasoner to let agents perform ontological inference,
 thus addressing \ref{req:reasoning}.
 %
 This approach gives developers the full potential of \jason{} plus \ac{DL}, 
@@ -588,7 +588,7 @@ rely on encapsulating functionalities and services in external components that a
 For instance
 CooL-\agentspeak{}~\cite{DBLP:journals/wias/MascardiABBR14} relies on \cartago{}~\cite{DBLP:books/sp/09/RicciPVO09},
 to define and implement the \emph{Ontology Artifact},
-providing agents with ontological reasoning capabilities%
+providing agents with ontological inference capabilities%
 ---encoding \ac{DL} statements as beliefs similarly to JASDL.
 
 Similarly, 
@@ -718,7 +718,7 @@ For instance,
 for Semantic Hypermedia agent,
 one may rely on \ac{RDF} and \ac{OWL} for beliefs representation,
 \acs{SPARQL} for belief querying and update,
-and \ac{SWRL} for plan selection and reasoning%
+and \ac{SWRL} for plan selection and ontological inference%
 %
 % In the latter case,
 % agent developers would be able to plug-in convenient syntaxes and ad-hoc technologies,
