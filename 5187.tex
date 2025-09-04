@@ -132,12 +132,9 @@ and (most recently) bots and scrapers%
 ---which can hardly be considered full agents.
 %
 However,
-as recent developments in Web engineering have led to
-the pervasive use of the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02},
-and the growing adoption of Web interoperability standards 
-% even outside the traditional Web domain
-(for instance the \ac{WoT}~\cite{wotarch}),
-the integration of \ac{MAS} and the Web gained new momentum.
+with the widespread adoption of the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02}
+and Web interoperability standards like \ac{WoT}~\cite{wotarch},
+the integration of \ac{MAS} and the Web has gained renewed momentum.
 
 Along this line,
 the \ac{W3C} Autonomous Agents on the Web community group\footnote{\url{https://www.w3.org/community/webagents/}}
@@ -248,8 +245,8 @@ is motivated by their direct mapping between high-level mental attitudes
 %
 This makes \ac{BDI} agents particularly suitable for engineering controllable, 
 predictable, 
-and explainable agent behaviors in open environments like the Web, 
-where explicit reasoning about knowledge and goals is essential.
+and explainable 
+agent behaviors in open environments like the Web.
 
 To declaratively define the agent's behavior the \ac{AOP} community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
 %
@@ -315,12 +312,17 @@ Following the idea of the environment as a first-class abstraction of \ac{MAS}~\
 \ac{hMAS} revisits the Agents and Artifacts meta-model~\cite{ricci2011aamas} as a way to modularize and program the environment.
 %
 In \ac{hMAS}, artifacts are represented as hypermedia resources, exposing affordances that agents can discover through the uniform interface of the Web.
-
-Most of the effort in the \ac{hMAS} community has been focused on shaping the environment dimension of the \ac{MAS}, as ideally heterogeneous agents should be able to operate in the same environment.
 %
-However, the agent dimension of \ac{hMAS} must also be investigated to improve how agents can effectively exploit the hypermedia environment (e.g., for action discovery at runtime~\cite{vachtsevanou2024atal}).
+Most efforts in the \ac{hMAS} community have focused on shaping the environment dimension of the \ac{MAS}, 
+since ideally, 
+heterogeneous agents should be able to operate within the environment.
 %
-In this paper, we focus on such agent dimension of \ac{hMAS} and specifically on \ac{BDI} agents and how to support deeper integration with semantic hypermedia.
+However, the agent dimension of \ac{hMAS} deserves further investigation to improve how agents can effectively exploit the hypermedia environment (e.g., for action discovery at runtime~\cite{vachtsevanou2024atal}).
+%
+Thus, 
+in this paper, 
+we focus on the agent dimension of \ac{hMAS}, 
+specifically on \ac{BDI} agents and how to support deeper integration with semantic hypermedia.
 
 %==========================================================
 \section{Integrating \acs{BDI} Agents and Semantic Hypermedia: a Gap Analysis}
@@ -387,7 +389,7 @@ Logic programs, instead, are not really meant to be scattered over the Web,
 nor being accessed remotely.
 
 Again,
-there is a hidden trap for \ac{BDI} developers willing to create agents that can perform ontological inference:
+\ac{BDI} developers who want to create agents capable of ontological inference face a hidden challenge:
 % This means that, in order to properly reason about the knowledge represented in \ac{RDF} and \ac{OWL},
 % developers may need to translate the whole \ac{RDF}, \ac{OWL} and ontology semantics into their own belief base, adding a significant overhead and a potential source of inconsistencies.
 either they translate the \ac{OWL} ontology into definite clauses,
@@ -555,23 +557,23 @@ in such a way that state transitions are tied to conditions expressed in \ac{DL}
 
 % \paragraph{Integrating \ac{DL} and \ac{BDI}.}
 
-\agentspeakdl{} is also the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08},
-i.e., an implementation of \agentspeakdl{} in \jason{}~\cite{bordini2007programming}.
+\agentspeakdl{} also serves as the foundation for JASDL~\cite{DBLP:conf/dalt/KlapiscakB08},
+an implementation of \agentspeakdl{} in \jason{}~\cite{bordini2007programming}.
 %
-The key extension in JASDL are ``semantically-enriched literals'', 
-i.e. $\mathcal{ALC}$ statements, 
-expressed as logic facts,
-with ordinary Jason syntax for beliefs
+The key extension in JASDL is the introduction of ``semantically-enriched literals,'' 
+i.e., $\mathcal{ALC}$ statements expressed as logic facts,
+%using \jason{} standard syntax for beliefs
 (see example in \Cref{lst:jasdl-example}).
 %
 % The examples in \Cref{lst:jasdl-example} illustrate how \ac{RDF} triples are represented as \ac{DL} in the belief base of the agent.
 %
-JASDL uses \jason{}'s standard belief-base management mechanisms,
+JASDL adopts \jason{} belief syntax and belief-base management mechanisms,
 while wrapping and adapting a semantic reasoner to let agents perform ontological inference,
 thus addressing \ref{req:reasoning}.
 %
-This approach gives developers the full potential of \jason{} plus \ac{DL}, 
-at the (non-neglible) price of translating \ac{RDF} triples into JASDL-compatible logic predicates.
+With this approach, 
+developers gain ontological inference in \jason{},
+but at the price of translating \ac{RDF} triples into logic predicates.
 %
 \lstinputlisting[float,
   lastline=3,
@@ -635,15 +637,12 @@ the Yggdrasil framework~\cite{ciortea2018emas} provides a hypermedia layer for b
 and has been used to implement \ac{hMAS} applications with the \jacamo{} framework.
 
 Finally, 
-there's also a similar work that goes in the direction of abstracting the reasoning cycle of \ac{BDI} agents from the underlying knowledge representation~\cite{novak2006atal}.
+a related approach is proposed in~\cite{novak2006atal}, 
+where a modular \ac{BDI} architecture supports various logic-based knowledge representations to ease integration with mainstream languages. 
 %
-In this work, 
-authors propose a modular \ac{BDI} architecture to provide support for various logic-based knowledge representation techniques, 
-to ease the adoption of \ac{BDI} implementations in mainstream programming languages.
-%
-Although the modularity intuition goes in the same direction of our proposal,
-this work does not assume that \ac{FOL} can be completely replaced by other mechanisms,
-thus limiting the applicability of their approach in other context, such as the hypermedia one.
+While sharing the modularity idea, 
+their framework still assumes \ac{FOL} as a basis, 
+limiting their applicability to contexts like hypermedia.
 
 % Finally,
 % in line with the vision of the environment as a first-citizen abstraction for the interaction between hypermedia and agents~\cite{DBLP:conf/www/CharpenayZLB22},
@@ -657,15 +656,15 @@ thus limiting the applicability of their approach in other context, such as the 
 To exploit new actions discovered at runtime \ref{req:actions} \ac{BDI} agents must have access to a \emph{planner} either within the agent (see ~\cite{MeneguzziS15} for a general overview of planning in \ac{BDI} agents) or through the environment---as proposed in Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}.
 %
 In the context of \ac{hMAS}, 
-this requires that affordances in the environment 
-formally describe the criteria for how and when to use them 
+this requires that the environment 
+formally describes how and when to use them 
 (e.g., their preconditions and effects),
 and that agents can interpret such information to instruct the planner accordingly.
 %
-Recent works have explored this idea by using \emph{signifiers}~\cite{vachtsevanou2023atal} in hypermedia environments to better convey affordances to \ac{BDI} agents~\cite{vachtsevanou2024atal}.
+Recent works explored this idea by using \emph{signifiers}~\cite{vachtsevanou2023atal} in hypermedia environments to better convey affordances to \ac{BDI} agents~\cite{vachtsevanou2024atal}.
 %
 A less structured approach is proposed in \cite{10.1145/3603163.3609077,schmid2024kgswc},
-where agents (albeit not \ac{BDI}) are able to select actions in a hypermedia environment by using an \ac{LLM} oracle.
+where agents (albeit not \ac{BDI}) are able to select actions in a hypermedia environment by using a \ac{LLM} oracle.
 
 %==========================================================
 \section{Levelling the Gap with a Generalized \ac{BDI} Engine}
@@ -743,8 +742,7 @@ and \ac{SWRL} for plan selection and ontological inference%
 % can be performed with a layered architecture of the framework.
 % %
 % The layered architecture proposed is composed of:
-Such a generalized \ac{BDI} engine can be implemented with a layered architecture,
-depicted in \Cref{fig:generalized-bdi-architecture}, and composed of three main layers.
+The generalized \ac{BDI} engine can be realized with a layered architecture (see \Cref{fig:generalized-bdi-architecture}) comprising three layers.
 %
 \begin{enumerate*}[label={\emph{Layer \arabic*}:}]
   \item \textbf{generalized \ac{BDI} reasoning layer},
