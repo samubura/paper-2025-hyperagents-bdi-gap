@@ -230,12 +230,6 @@ propose a mitigation strategy based on abstracting the design of agent-oriented 
 The \ac{BDI} model~\cite{DBLP:conf/kr/RaoG91}
 is a well-established cognitive architecture for the development of intelligent agents.
 %
-% It is based on the idea of representing an agent's mental state in terms of three key components:
-% \begin{inlinelist}
-%   \item \emph{beliefs} are what the agent thinks to be true,
-%   \item \emph{desires} are the potential goals or objectives an agent may pursue,
-%   \item \emph{intentions} are the agent's commitments to achieve specific desires.
-% \end{inlinelist}
 \ac{BDI} agents follow a continuous cycle of
 \begin{inlinelist}
   \item \emph{perception} of external stimuli and gather new \emph{beliefs},
@@ -243,21 +237,28 @@ is a well-established cognitive architecture for the development of intelligent 
   and
   \item \emph{action} advancing one intention by executing a step of the associated plan.
 \end{inlinelist}
+%
 Practically, most \ac{BDI} agents implementations follow the \ac{PRS} architecture~\cite{georgeff1986pieee},
 which is based on the ability for agents to select plans from a predefined set
 and execute them to achieve their goals.
+%
+The focus on \ac{BDI} agents, 
+as opposed to other reasoning-loop cognitive architectures, 
+is motivated by their direct mapping between high-level mental attitudes 
+(beliefs, desires, intentions) and practical agent programming constructs. 
+%
+This makes \ac{BDI} agents particularly suitable for engineering controllable, 
+predictable, 
+and explainable agent behaviors in open environments like the Web, 
+where explicit reasoning about knowledge and goals is essential.
 
 To declaratively define the agent's behavior the \ac{AOP} community has developed several \ac{BDI} programming languages and frameworks~\cite{DBLP:conf/woa/MascardiDA05}.
 %
 Arguably, 
 the most popular language is \agentspeak{(L)}~\cite{DBLP:conf/maamaw/Rao96}
 with its \jason{}~\cite{bordini2007programming} implementation, 
-which uses a formal syntax and semantics derived from \ac{LP} for representing beliefs, goals, and actions as logic predicates, 
+which uses a formal syntax and semantics derived from \ac{LP} for representing beliefs, goals, and actions as logic predicates.
 
-%This allows to exploit logic unification to query the agent's \emph{belief base} and match plans to achieve goals.
-%The \agentspeak{} abstract language has been implemented in the \jason{}~\cite{bordini2007programming} agent programming platform, providing an interpreter and a Java-based runtime environment for developing \ac{BDI} \ac{MAS}.
-
-% The logic-based nature of \agentspeak{} has characterized the development of \ac{BDI} agents due to its expressiveness and flexibility in supporting the basic mechanisms of the \ac{BDI} reasoning cycle.
 %
 Although \ac{BDI} programming languages and frameworks with little or no reliance on \ac{LP} mechanisms exist
 (e.g., \cite{map2005sp,kampik2019emas,howden2001jack}),
