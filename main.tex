@@ -135,8 +135,9 @@ and (most recently) bots and scrapers%
 However,
 as recent developments in Web engineering have led to
 the pervasive use of the \ac{REST} architectural style~\cite{DBLP:journals/toit/FieldingT02},
-and the growing adoption of Web interoperability standards % even outside the traditional Web domain
--- for instance the \ac{WoT}~\cite{wotarch} --,
+and the growing adoption of Web interoperability standards 
+% even outside the traditional Web domain
+(for instance the \ac{WoT}~\cite{wotarch}),
 the integration of \ac{MAS} and the Web gained new momentum.
 
 Along this line,
@@ -149,7 +150,7 @@ agents can interact by consuming and manipulating hypermedia resources.
 Even more recently,
 with the advent of \ac{LLM}-based \emph{Agentic AI}~\cite{acharya2025access}
 the creation of \ac{LLM}-driven agents that interact with Web APIs~\cite{10.5555/3692070.3692540}
--- or directly with Websites~\cite{10.5555/3692070.3694608} --
+(or directly with Websites~\cite{10.5555/3692070.3694608})
 has gained significant attention.
 %
 However,
@@ -427,11 +428,12 @@ Consider for instance a query searching for the unknown relations \texttt{?r} be
 and matching all the triples where the subject is \texttt{carl} and
 the predicate is \texttt{?r} to retrieve all the objects \texttt{?x}.
 %
-A query of this kind would be straightforward to write in \acs{SPARQL},
-while requiring second-order variables in \ac{LP}%
----a feature which is not commonly supported by \ac{LP} or \ac{BDI} frameworks,
-and which is commonly worked around via \emph{meta-programming},
-resulting in longer and cumbersome \ac{LP} code.
+A query of this kind would be straightforward to write in \acs{SPARQL}, 
+while it would require second-order variables in \ac{LP}. 
+%
+This feature is not commonly supported by \ac{LP} or \ac{BDI} frameworks, 
+and is typically worked around via \emph{meta-programming}, 
+resulting in longer and more cumbersome \ac{LP} code.
 
 %
 As for inference,
@@ -457,7 +459,7 @@ This makes it difficult for agents to adapt to unexpected settings or to flexibl
 Relating this to the open hypermedia nature of the Web, makes the effective integration of \ac{BDI} agents challenging.
 %
 Following the \ac{HATEOAS} principle, agents may discover new affordances
--- i.e., possible action --
+(i.e., possible actions)
 while navigating through the hypermedia environment.
 %
 The inability to exploit such new affordances may limit the agent in adapting to the environment and effectively interact with it.
@@ -498,7 +500,7 @@ We hence propose that a \ac{BDI} agent programming framework for \ac{hMAS} shoul
 Here we summarize some related works demonstrating how,
 despite the many extensions of \agentspeak{} towards \ac{DL},
 the direct exploitation of Semantic Web technologies
--- namely, \ref{req:direct} and \ref{req:query} --
+(namely, \ref{req:direct} and \ref{req:query})
 in \ac{BDI} \emph{programming} frameworks is still underexplored.
 
 % \paragraph{Semantic extensions of \agentspeak{}.}
@@ -593,7 +595,7 @@ providing agents with ontological inference capabilities%
 
 Similarly, 
 Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22} extends \jacamo{}~\cite{BOISSIER2013747}
--- again, via artifacts and constraints on the beliefs-base syntax --
+(again, via artifacts and constraints on the beliefs-base syntax)
 to support agents interacting with semantic hypermedia and, in particular, the \ac{WoT}.
 %
 More precisely,
@@ -640,7 +642,7 @@ and has been used to implement \ac{hMAS} applications with the \jacamo{} framewo
 
 \paragraph{Exploiting Discovered Actions at Runtime.}
 
-To exploit new actions discovered at runtime \ref{req:actions} \ac{BDI} agents must have access to a \emph{planner} either within the agent -- see ~\cite{MeneguzziS15} for a general overview of planning in \ac{BDI} agents -- or through the environment---as proposed in Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}.
+To exploit new actions discovered at runtime \ref{req:actions} \ac{BDI} agents must have access to a \emph{planner} either within the agent (see ~\cite{MeneguzziS15} for a general overview of planning in \ac{BDI} agents) or through the environment---as proposed in Hypermedea~\cite{DBLP:conf/www/CharpenayZLB22}.
 %
 In the context of \ac{hMAS}, 
 this requires that affordances in the environment 
@@ -662,7 +664,7 @@ To bridge the gap between \ac{BDI} agents and semantic hypermedia,
 we propose a \emph{generalized} \ac{BDI} engine,
 addressing the requirements in \Cref{sec:integrating-bdi-hypermedia}.
 %
-This approach primarily tackles gap~\ref{gap:logic}, while leaving the exploration of gap~\ref{gap:open-world} -- benefitting from the modularity of the engine -- to future works.
+This approach primarily tackles gap~\ref{gap:logic}, while leaving the exploration of gap~\ref{gap:open-world} (benefitting from the modularity of the engine) to future works.
 
 The core idea is to create a \ac{BDI} interpreter encapsulating agents reasoning cycle,
 while decoupling the specific technology used for knowledge representation and manipulation.
@@ -671,7 +673,7 @@ This would allow for tailoring the reasoning mechanisms to application-specific 
 %
 In this way,
 beliefs
--- and, consequently, reasoning --
+(and, consequently, reasoning)
 can flexibly support different formats depending on the domain at hand.
 %
 In this way,
